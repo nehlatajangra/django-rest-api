@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- POST  -->
+    <!-- <form id="product_form" method="">
+        {% csrf_token %}
+
+        <input type="text" name="prod_name" id="prod_name" placeholder="Enter Product Name">
+        <input type="text" name="brand" placeholder="Enter Brand Name">
+        <input type="number" name="price" placeholder="Enter Product Price">
+        <input type="text" name="desc" placeholder="Enter description of proiduct">
+
+        <button type="submit" value="submit" >Add Product</button>
+    </form> -->
+
+
+
+    <!-- PUT & Patch  -->
+    <!-- <input type="text" id="prod_id" placeholder="enter id"/><br>
+    <button type="submit" value="submit" onclick="getProduct()" >search</button><br><br>
+
+    <form id="product_update_form" >
+        {% csrf_token %}
+
+        <input type="text" name="prod_name" id="prod_name" placeholder="Enter New Product Name"><br>
+        <input type="text" name="brand" placeholder="Enter  New  Brand Name"><br>
+        <input type="number" name="price" placeholder="Enter  New Product Price"><br>
+        <input type="text" name="desc" placeholder="Enter  New description of product"><br>
+
+        <button type="submit" value="submit" >Update Product</button><br>
+    </form> -->
+
+
+
+    <!-- PATCH  -->
+        <!-- <input type="text" id="prod_id" placeholder="enter id"/><br>
+        <button type="submit" value="submit" onclick="getProduct()" >search</button><br><br>
+    
+        <form id="product_update_form" >
+            {% csrf_token %}
+    
+            <input type="number" name="price" placeholder="Enter  New Product Price"><br>
+    
+            <button type="submit" value="submit" >Update Product</button><br>
+        </form> -->
+
+    <!-- Delete -->
+        <!-- <input type="text" id="prod_id" placeholder="enter product name"/><br>
+        <button type="submit" value="submit" onclick="getProduct()" >Delete</button><br><br> -->
+
+
+</body>
+<script>
+    //// filter product with id //////////////////////
+    async function getProduct(){
+    var p_name=document.getElementById("prod_id").value;
+    console.log(p_name);
+    try{
+        const response=await fetch(`http://127.0.0.1:8000/product/?prod_name=${p_name}`);
+        if( response.ok){
+            const data=await response.json();
+            var p_id=data[0].id;
+            console.log(data[0].id);
+        }
+        else{
+                console.error("error:",response.statusText);
+        }
+    }
+    catch{
+        console.error("Error",error);
+    }
+    
+
+    //Update Product with PUT
+    // document.getElementById("product_update_form").addEventListener("submit",
+    // function(event){
+    //     event.preventDefault();
+
+    //     var formElement=event.target;
+    //     var formData=new FormData(formElement);
+    //     console.log(formData);
+    //     formData.append("category",7);
+        
+
+    //     fetch(`http://127.0.0.1:8000/product/${p_id}/`,{
+    //         method:"PUT",
+    //         body: formData
+    //     }).then(res=>res.json())
+    //     .then(data=>console.log(data))
+    //     .then(err=>console.log(err));
+    // })
+
+
+
+        // //update with PATCH 
+    // document.getElementById("product_update_form").addEventListener("submit",
+    // function(event){
+    //     event.preventDefault();
+
+    //     var formElement=event.target;
+    //     var formdata=new FormData(formElement);
+    //     console.log(formdata);
+    //     formdata.append("category",7);
+        
+
+    //     fetch(`http://127.0.0.1:8000/product/${p_id}/`,{
+    //         method:"PATCH",
+    //         body: formdata
+    //     }).then(res=>res.json())
+    //     .then(data=>console.log(data,"=================="))
+    //     .then(err=>console.log(err));
+
+    // })
+
+    ////delete  a product 
+
+        // fetch(`http://127.0.0.1:8000/product/${p_id}/`,{
+        //     method:"DELETE",
+        // })
+        // console.log("deleted")
+
+
+    }
+
+
+
+
+    ////ADD new product with POST //////////////////////
+    // document.getElementById("product_form").addEventListener("submit",
+    // function(event){
+    //     event.preventDefault();
+
+    //     let word1 = document.getElementById("prod_name").value;
+    // console.log(word1,'==============name')
+
+    //     var formElement=event.target;
+    //     var formdata=new FormData(formElement);
+    //     console.log(formdata);
+    //     formdata.append("category",2);
+        
+
+    //     fetch("http://127.0.0.1:8000/product/",{
+    //         method:"POST",
+    //         body: formdata
+    //     }).then(res=>res.json())
+    //     .then(data=>console.log(data,"=================="))
+    //     .then(err=>console.log(err));
+
+    // })
+
+
+
+    ////delete  a product 
+    // document.getElementById("dlt_product").addEventListener("submit",
+    // function(event){
+    //     event.preventDefault();
+
+    //     var p_name=document.getElementById("prod_id").value;
+
+    //     fetch(`http://127.0.0.1:8000/product/?prod_name=${p_name}/`,{
+    //         method:"DELETE",
+    //     })
+    //     console.log("deleted")
+
+
+    // })
+    
+</script>
+</html>

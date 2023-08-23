@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- ADD NEW USER  -->
+    <form method="" id="user_form">
+        {% csrf_token %}
+
+        <input type="email" id="user_email" name="email" placeholder="User Email"><br>
+        <input type="password" id="user_pass" name="password" placeholder="User Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"><br>
+        <input type="text" id="user_fname" name="first_name" placeholder="User First Name"><br>
+        <input type="text" id="user_lname" name="last_name"  placeholder="User Last Name"><br>
+        <input type="testarea" id="user_address" name="address" placeholder="User Address"><br>
+        <input type="text" id="user_age" name="age"  placeholder="User Age"><br>
+        <input type="number" id="user_phn" name="phone_no" placeholder="User phone number" maxlength="10" pattern="[6-9]{1}[0-9]{9}" title="number must start from 6,7,8,9, and must have 10 digits"><br>
+        <label for="male_gen">Male</label>
+        <input type="radio" id="male_gen"  name="gender" value="Male">
+        <label for="female_gen">Female</label>
+        <input type="radio" id="female_gen"  name="gender" value="Female"><br>
+
+        <button type="submit" value="submit" >Create User</button>
+    </form>
+
+
+
+    <!--////////////////////////////      use for put and patch and delete /////////////////////             -->
+
+    <!-- get user using emailid  -->
+    <!-- <input type="text" id="email_id" placeholder="Enter user Emailid"/><br>
+    <button type="submit" value="submit" onclick="getUser()">Get User</button><br><br> -->
+
+    <!-- UPDATE USER DETAIL  PUT -->
+    <!-- <h3>Enter new Details</h3>
+    <form method="" id="user_update_form">
+        {% csrf_token %}
+
+        <input type="email" id="user_email"  name="email" placeholder="User Email"><br>
+        <input type="password" id="user_pass" name="password" placeholder="User Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"><br>
+        <input type="text" id="user_fname" name="first_name" placeholder="User First Name"><br>
+        <input type="text" id="user_lname" name="last_name"  placeholder="User Last Name"><br>
+        <input type="testarea" id="user_address" name="address" placeholder="User Address"><br>
+        <input type="text" id="user_age" name="age"  placeholder="User Age"><br>
+        <input type="number" id="user_phn" name="phone_no" placeholder="User phone number" pattern="[6-9]{1}[0-9]{9}" title="number must start from 6,7,8,9, and must have 10 digits"><br>
+        <label for="male_gen">Male</label>
+        <input type="radio" id="male_gen"  name="gender" value="Male">
+        <label for="female_gen">Female</label>
+        <input type="radio" id="female_gen"  name="gender" value="Female"><br>
+
+        <button type="submit" value="submit" >Update User</button>
+    </form> -->
+
+
+
+    <!-- UPdate user using PATCH -->
+    <!-- <h3>Enter new Details</h3>
+    <form method="" id="user_update_form">
+        {% csrf_token %}
+
+        <input type="text" id="user_age" name="age"  placeholder="User Age"><br>
+        <input type="number" id="user_phn" name="phone_no" placeholder="User phone number" pattern="[6-9]{1}[0-9]{9}" title="number must start from 6,7,8,9, and must have 10 digits"><br>
+
+        <button type="submit" value="submit" >Update User</button>
+    </form> -->
+
+
+    
+</body>
+
+<script>
+    // //filter user
+    async function getUser(){
+    var e_id=document.getElementById("email_id").value;
+    console.log(e_id);
+    try{
+        const response=await fetch(`http://127.0.0.1:8000/Customer/?email=${e_id}`);
+        if(response.ok){
+            const data=await response.json();
+            var u_id=data[0].id;
+            console.log(data[0].id);
+        }
+        else{
+            console.log("Error:",response.statusText);
+        }
+    }
+    catch{
+        console.error("error",error);
+    }
+
+    ////delete  a user 
+    // fetch(`http://127.0.0.1:8000/Customer/${u_id}/`,{
+    //     method:"DELETE",
+    // })
+    // console.log("deleted")
+    
+    
+    
+    ////update data using patch
+    //document.getElementById("user_update_form").addEventListener("submit", function(event) {
+    // event.preventDefault(); // Prevent the default form submission
+
+    // var formElement = event.target;
+    // var formData = new FormData(formElement);
+    // var email_id=document.getElementById("email_id").value;
+
+    // console.log(formData,'--data')
+
+    // fetch(`http://127.0.0.1:8000/Customer/${u_id}/`, {
+    //     method: "PATCH",
+    //     body: formData
+    // })
+    // .then(res => res.json())
+    // .then(data => console.log(data))
+    // .catch(err => console.error(err));
+    // });
+
+
+
+    ////////////////////////    Update data using PUT
+    // document.getElementById("user_update_form").addEventListener("submit", function(event) {
+    // event.preventDefault(); // Prevent the default form submission
+
+    // var formElement = event.target;
+    // var formData = new FormData(formElement);
+
+    // console.log(formData,'--data')
+
+    // fetch(`http://127.0.0.1:8000/Customer/${u_id}/`, {
+    //     method: "PUT",
+    //     body: formData
+    // })
+    // .then(res => res.json())
+    // .then(data => console.log(data))
+    // .catch(err => console.error(err));
+    // });
+
+
+    }
+
+
+
+    ////Post Data 
+    document.getElementById("user_form").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    var formElement = event.target;
+    var formData = new FormData(formElement);
+
+    console.log(formData,'--data')
+
+    fetch("http://127.0.0.1:8000/Customer/", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(err => console.error(err));
+    });
+
+
+
+</script>
+</html>
