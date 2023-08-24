@@ -11,12 +11,12 @@
         {% csrf_token %}
 
         <input type="email" id="user_email" name="email" placeholder="User Email"><br>
-        <input type="password" id="user_pass" name="password" placeholder="User Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"><br>
+        <input type="password" id="user_pass" name="password" placeholder="User Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Enter a combination of [a-z][A-Z][0-9] and must be 8 char long"><br>
         <input type="text" id="user_fname" name="first_name" placeholder="User First Name"><br>
         <input type="text" id="user_lname" name="last_name"  placeholder="User Last Name"><br>
         <input type="testarea" id="user_address" name="address" placeholder="User Address"><br>
         <input type="text" id="user_age" name="age"  placeholder="User Age"><br>
-        <input type="number" id="user_phn" name="phone_no" placeholder="User phone number" maxlength="10" pattern="[6-9]{1}[0-9]{9}" title="number must start from 6,7,8,9, and must have 10 digits"><br>
+        <input type="tel" id="user_phn" name="phone_no" placeholder="User phone number" minlength="10" maxlength="10" pattern="[6-9]{1}[0-9]{9}" title="number must start from 6,7,8,9, and must have 10 digits"><br>
         <label for="male_gen">Male</label>
         <input type="radio" id="male_gen"  name="gender" value="Male">
         <label for="female_gen">Female</label>

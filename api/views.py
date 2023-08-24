@@ -4,6 +4,9 @@ from django.shortcuts import render,HttpResponse
 from rest_framework import viewsets,filters
 from .models import Customer,Category,Product
 from .serializers import UModelSerializer,CModelSerializer,PModelSerializer
+from rest_framework.decorators import api_view
+from django.contrib.auth.hashers import make_password
+from rest_framework.response import Response
 # Create your views here.
 class CustomerViewset(viewsets.ModelViewSet):
     queryset=Customer.objects.all()
@@ -11,13 +14,6 @@ class CustomerViewset(viewsets.ModelViewSet):
     
     filter_backends = [DjangoFilterBackend,filters.SearchFilter]
     filterset_fields = ['first_name',"last_name","email"]
-        
-# class SelectedModelViewset(viewsets.ModelViewSet):
-#     queryset=Customer.objects.all()
-#     serializer_class=SelectedModelSerializer
-    
-#     filter_backends=[DjangoFilterBackend,filters.SearchFilter]
-#     filterset_fields=['email']
     
     
 class CategoryViewset(viewsets.ModelViewSet):
@@ -47,3 +43,12 @@ def addUser(request):
 def addProduct(request):
     return render(request,"product.html")
         
+        
+        
+# 33333333333333333333333333333333333333333
+@api_view(['GET'])
+def getUser(request):
+    users = Customer.objects.all()
+    serializer = UModelSerializer(users, many=True)
+    return Response(serializer.data)
+

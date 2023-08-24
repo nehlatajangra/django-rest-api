@@ -6,10 +6,7 @@ class UModelSerializer(serializers.ModelSerializer):
         model=Customer
         fields='__all__'
         
-# class SelectedModelSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model=Customer
-#         fields=['id','email']
+
         
 class CModelSerializer(serializers.ModelSerializer):
     class Meta:

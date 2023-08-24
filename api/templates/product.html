@@ -7,16 +7,16 @@
 </head>
 <body>
     <!-- POST  -->
-    <!-- <form id="product_form" method="">
+    <form id="product_form" method="">
         {% csrf_token %}
 
-        <input type="text" name="prod_name" id="prod_name" placeholder="Enter Product Name">
-        <input type="text" name="brand" placeholder="Enter Brand Name">
-        <input type="number" name="price" placeholder="Enter Product Price">
-        <input type="text" name="desc" placeholder="Enter description of proiduct">
+        <input type="text" name="prod_name" id="prod_name" placeholder="Enter Product Name"><br>
+        <input type="text" name="brand" placeholder="Enter Brand Name"><br>
+        <input type="number" name="price" placeholder="Enter Product Price"><br>
+        <input type="text" name="desc" placeholder="Enter description of proiduct"><br>
 
-        <button type="submit" value="submit" >Add Product</button>
-    </form> -->
+        <button type="submit" value="submit" >Add Product</button><br>
+    </form>
 
 
 
@@ -131,27 +131,27 @@
 
 
     ////ADD new product with POST //////////////////////
-    // document.getElementById("product_form").addEventListener("submit",
-    // function(event){
-    //     event.preventDefault();
+    document.getElementById("product_form").addEventListener("submit",
+    function(event){
+        event.preventDefault();
 
-    //     let word1 = document.getElementById("prod_name").value;
-    // console.log(word1,'==============name')
+        let word1 = document.getElementById("prod_name").value;
+    console.log(word1,'==============name')
 
-    //     var formElement=event.target;
-    //     var formdata=new FormData(formElement);
-    //     console.log(formdata);
-    //     formdata.append("category",2);
+        var formElement=event.target;
+        var formdata=new FormData(formElement);
+        console.log(formdata);
+        formdata.append("category",'4');
         
 
-    //     fetch("http://127.0.0.1:8000/product/",{
-    //         method:"POST",
-    //         body: formdata
-    //     }).then(res=>res.json())
-    //     .then(data=>console.log(data,"=================="))
-    //     .then(err=>console.log(err));
+        fetch("http://127.0.0.1:8000/product/",{
+            method:"POST",
+            body: formdata
+        }).then(res=>res.json())
+        .then(data=>console.log(data,"=================="))
+        .then(err=>console.log(err));
 
-    // })
+    })
 
 
 
