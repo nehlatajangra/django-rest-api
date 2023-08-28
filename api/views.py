@@ -3,7 +3,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import render,HttpResponse
 from rest_framework import viewsets,filters
 from .models import Customer,Category,Product
-from .serializers import UModelSerializer,CModelSerializer,PModelSerializer
+from .serializers import UModelSerializer,CModelSerializer,PModelSerializer,LoginModelSerializer
 from rest_framework.decorators import api_view
 from django.contrib.auth.hashers import make_password
 from rest_framework.response import Response
@@ -14,6 +14,12 @@ class CustomerViewset(viewsets.ModelViewSet):
     
     filter_backends = [DjangoFilterBackend,filters.SearchFilter]
     filterset_fields = ['first_name',"last_name","email"]
+    
+class UserViewset(viewsets.ModelViewSet):
+    queryset=Customer.objects.all()
+    serializer_class=LoginModelSerializer
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter]
+    filterset_fields = ["email"]
     
     
 class CategoryViewset(viewsets.ModelViewSet):
@@ -43,7 +49,9 @@ def addUser(request):
 def addProduct(request):
     return render(request,"product.html")
         
-        
+    
+def popUp(request):
+    return render(request,'popup.html')    
         
 # 33333333333333333333333333333333333333333
 @api_view(['GET'])

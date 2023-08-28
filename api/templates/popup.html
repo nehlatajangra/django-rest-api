@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .container{
+           background-color: rgb(137, 176, 214);
+           width:50vw;
+           height:50vh;
+           position: relative;
+        }
+        .form{
+            padding-top: 70px;
+        }
+        .login-form-popup {
+            display: none;
+            /* position: fixed; */
+            bottom: 0;
+            right: 15px;
+            border: 3px solid #f1f1f1;
+            z-index: 9;
+            }
+        .signup-form-popup {
+            display: none;
+            /* position: fixed; */
+            bottom: 0;
+            right: 15px;
+            border: 3px solid #f1f1f1;
+            z-index: 9;
+            }
+            .category-form-popup {
+            display: none;
+            /* position: fixed; */
+            bottom: 0;
+            right: 15px;
+            border: 3px solid #f1f1f1;
+            z-index: 9;
+            }
+            .product-form-popup {
+            display: none;
+            /* position: fixed; */
+            bottom: 0;
+            right: 15px;
+            border: 3px solid #f1f1f1;
+            z-index: 9;
+            }
+    </style>
+</head>
+<body>
+        <div class="col-md-12">
+            <button class="open-button btn-primary" onclick="openSignUPForm()">Open SignUp Form</button>
+            <button class="open-button btn-primary" onclick="openLoginForm()">Open Login Form</button>
+        </div>
+        <div class="login-form-popup" id="login">
+            <div class="container mt-4">
+                <div class="heading">
+                    <h3 style="text-align: center; color: rgb(27, 17, 168);">Login</h3>
+                </div>
+        
+                <div class="form">
+                <!-- ADD NEW USER  -->
+                <form method="" id="login_user_form">
+                    {% csrf_token %}
+
+                            <div class="form-group">
+                            <input type="email" id="user_emailid" required name="email" placeholder="User Email"><br>
+                            </div>
+
+                            <div class="form-group">
+                            <input type="password" id="user_pass" required name="password" placeholder="User Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Enter a combination of [a-z][A-Z][0-9] and must be 8 char long"><br>
+                            </div>
+
+                            <p>Don't have an account yet?<a id="signup-link" href="#" onclick="openSignUPForm()">Sign Up</a></p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                        <button type="submit" value="submit" class="btn btn-primary" onclick="OpenCategoryForm()" >Create User</button>
+                        </div>
+                        <div class="COL-MD-6">
+                        <button type="button" class="btn cancel btn-primary" onclick="closeLoginForm()">Close</button>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+            </div>
+    <div class="signup-form-popup" id="signUp">
+    <div class="container mt-4">
+        <div class="heading">
+            <h3 style="text-align: center; color: rgb(27, 17, 168);">Registeration Form</h3>
+        </div>
+
+        <div class="form">
+        <!-- ADD NEW USER  -->
+        <form method="" id="user_form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                    <input type="email" id="user_email" required name="email" placeholder="User Email"><br>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                    <input type="password" id="user_pass" required name="password" placeholder="User Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Enter a combination of [a-z][A-Z][0-9] and must be 8 char long"><br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                    <input type="text" id="user_fname" required name="first_name" placeholder="User First Name"><br>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                    <input type="text" id="user_lname" required name="last_name"  placeholder="User Last Name"><br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                    <input type="text" id="user_age" required name="age"  placeholder="User Age"><br>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                    <input type="tel" id="user_phn" required name="phone_no" placeholder="User phone number" minlength="10" maxlength="10" pattern="[6-9]{1}[0-9]{9}" title="number must start from 6,7,8,9, and must have 10 digits"><br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                    <input type="textarea" id="user_address" required name="address" placeholder="User Address"><br>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                    <label for="male_gen">Male</label>
+                    <input type="radio" id="male_gen" required name="gender" value="Male">
+                    <label for="female_gen">Female</label>
+                    <input type="radio" id="female_gen" required name="gender" value="Female"><br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                <button type="submit" value="submit" class="btn btn-primary" onclick="OpenCategoryForm()" >Create User</button>
+                </div>
+                <div class="COL-MD-6">
+                <button type="button" class="btn cancel btn-primary" onclick="closeSignUpForm()">Close</button>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+    </div>
+    <div class="category-form-popup" id="category-form">
+        <div class="container mt-4">
+            <div class="heading">
+                <h3 style="text-align: center; color: rgb(27, 17, 168);">Category Form</h3>
+            </div>
+    
+            <div class="form">
+            <!-- ADD NEW USER  -->
+            <form method="" id="category_form">
+                {% csrf_token %}
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="text" required id="category_name" name="cat_name" placeholder="Category Name">
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="col-md-6">
+                    <button type="submit" value="submit" class="btn btn-primary" onclick="OpenProductForm()" >Add Category</button>
+                    </div>
+                    <div class="COL-MD-6">
+                    <button type="button" class="btn cancel btn-primary" onclick="closeCategoryForm()">Close</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+        </div>
+    <div class="product-form-popup" id="product-form">
+        <div class="container mt-4">
+            <div class="heading">
+                <h3 style="text-align: center; color: rgb(27, 17, 168);">Product Form</h3>
+            </div>
+    
+            <div class="form">
+            <!-- ADD NEW USER  -->
+            <form method="" id="product_form">
+                {% csrf_token %}
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="text" name="prod_name" required id="prod_name" placeholder="Enter Product Name"><br>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="text" name="brand" required placeholder="Enter Brand Name"><br>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="number" name="price" required placeholder="Enter Product Price"><br>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="text" name="desc" required placeholder="Enter description of proiduct"><br>
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="col-md-6">
+                    <button type="submit" value="submit" class="btn btn-primary" >Add Product</button>
+                    </div>
+                    <div class="COL-MD-6">
+                    <button type="button" class="btn cancel btn-primary" onclick="closeProductForm()">Close</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+        </div>
+</body>
+<script>
+    
+    ////Post Data for User
+    document.getElementById("user_form").addEventListener("submit", function(event) {
+    event.preventDefault();
+    var emailInput = document.getElementById("user_email");
+    var emailValue = emailInput.value;
+    var url = `http://127.0.0.1:8000/Customer/?email=${emailValue}`;
+    console.log(url);
+    fetch(url)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        console.log(data[0].email);
+
+        if (data[0].email) {
+            
+            alert("Email is already registered!");
+        } else {
+            var formElement = event.target;
+            var formData = new FormData(formElement);
+            fetch('http://127.0.0.1:8000/Customer/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error("Error occurred while submitting data:", error);
+                alert("Error occurred while submitting data.");
+            });
+        }
+    })
+    .catch(error => {
+        console.error("Error occurred while checking email:", error);
+        alert("Error occurred while checking email.");
+    });
+});
+
+
+
+
+
+
+    ////ADD new product with POST //////////////////////
+    document.getElementById("product_form").addEventListener("submit",
+    function(event){
+        event.preventDefault();
+
+        let word1 = document.getElementById("prod_name").value;
+    console.log(word1,'==============name')
+
+        var formElement=event.target;
+        var formdata=new FormData(formElement);
+        console.log(formdata);
+        formdata.append("category",'4');
+        
+
+        fetch("http://127.0.0.1:8000/product/",{
+            method:"POST",
+            body: formdata
+        }).then(res=>res.json())
+        .then(data=>console.log(data,"=================="))
+        .then(err=>console.log(err));
+
+    })
+
+    // //add Category with POST
+    document.getElementById("category_form").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    var formElement = event.target;
+    var formData = new FormData(formElement);
+    formData.append('Customer', '2');
+
+
+    console.log(formData,'--data')
+
+    fetch("http://127.0.0.1:8000/category/", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(err => console.error(err));
+});
+
+
+    function openLoginForm() {
+    document.getElementById("login").style.display = "block";
+    }
+
+    function closeLoginForm() {
+    document.getElementById("login").style.display = "none";
+    }
+
+    function openSignUPForm() {
+    document.getElementById("signUp").style.display = "block";
+    }
+
+    function closeSignUpForm() {
+    document.getElementById("signUp").style.display = "none";
+    }
+
+    function OpenCategoryForm(){
+        if(document.getElementById("user_form").validity.valueMissing){
+        alert('All Fields  required');}
+        document.getElementById("category-form").style.display="block";
+        document.getElementById("signUp").style.display = "none";
+    }
+
+    function closeCategoryForm() {
+    document.getElementById("category-form").style.display = "none";
+    }
+    function OpenProductForm(){
+        if(document.getElementById("category_form").validity.valueMissing){
+        alert('All Fields  required');}
+        document.getElementById("product-form").style.display="block";
+        document.getElementById("category-form").style.display = "none";
+    }
+
+    function closeProductForm() {
+    document.getElementById("product-form").style.display = "none";
+    }
+
+    
+
+document.getElementById("signup-link").addEventListener("click",function(event){
+    event.preventDefault();
+    openSignUPForm();
+    closeLoginForm()
+})
+// // login validation
+document.getElementById("login_user_form").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+
+    var emailInput = document.getElementById("user_emailid");
+    var emailValue = emailInput.value;
+    var url = `http://127.0.0.1:8000/Customer/?email=${emailValue}`;
+    console.log(url);
+    fetch(url)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        console.log(data[0].email);
+
+        if (data[0].email) {
+            
+            alert("Email is already registered!");
+        } 
+    })
+});
+
+
+
+
+</script>
+</html>
