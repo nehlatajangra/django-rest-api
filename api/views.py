@@ -7,6 +7,8 @@ from .serializers import UModelSerializer,CModelSerializer,PModelSerializer,Logi
 from rest_framework.decorators import api_view
 from django.contrib.auth.hashers import make_password
 from rest_framework.response import Response
+from django.contrib.auth import authenticate, login
+
 # Create your views here.
 class CustomerViewset(viewsets.ModelViewSet):
     queryset=Customer.objects.all()
@@ -19,7 +21,7 @@ class UserViewset(viewsets.ModelViewSet):
     queryset=Customer.objects.all()
     serializer_class=LoginModelSerializer
     filter_backends = [DjangoFilterBackend,filters.SearchFilter]
-    filterset_fields = ["email"]
+    filterset_fields = ["email","password"]
     
     
 class CategoryViewset(viewsets.ModelViewSet):
@@ -27,7 +29,7 @@ class CategoryViewset(viewsets.ModelViewSet):
     serializer_class=CModelSerializer
         
     filter_backends = [DjangoFilterBackend,filters.SearchFilter]
-    filterset_fields = ["cat_name","Customer"]
+    filterset_fields = ["cat_name"]
     
     
 class ProductViewset(viewsets.ModelViewSet):
@@ -51,7 +53,7 @@ def addProduct(request):
         
     
 def popUp(request):
-    return render(request,'popup.html')    
+    return render(request,'popUpForm.html')    
         
 # 33333333333333333333333333333333333333333
 @api_view(['GET'])

@@ -11,11 +11,11 @@ router.register('product',views.ProductViewset,basename='product')
 router.register('category',views.CategoryViewset,basename='category')
 # router.register('user',views.SelectedModelSerializer,basename='user')
 urlpatterns = [
-    path('search',views.home,name='search'),
-    path('catpage',views.catPage,name='catpage'),
-    path('adduser',views.addUser,name="adduser"),
-    path('addproduct',views.addProduct,name="addProduct"),
-    path('getUser',views.getUser,name='getUser'),
+    path('search/',views.home,name='search'),
+    path('catpage/',views.catPage,name='catpage'),
+    path('adduser/',views.addUser,name="adduser"),
+    path('addproduct/',views.addProduct,name="addProduct"),
+    path('getUser/',views.getUser,name='getUser'),
     path('',views.popUp,name="popup")
 ]
 urlpatterns+=router.urls

@@ -14,7 +14,6 @@ class  Customer(models.Model):
     
     
 class Category(models.Model):
-    Customer=models.ForeignKey(Customer,on_delete=models.CASCADE)
     cat_name=models.CharField(max_length=100,default="")
     
 class Product(models.Model):

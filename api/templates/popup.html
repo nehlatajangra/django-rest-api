@@ -49,14 +49,45 @@
             border: 3px solid #f1f1f1;
             z-index: 9;
             }
+            .login-form-popup-email{
+            display: none;
+            /* position: fixed; */
+            bottom: 0;
+            right: 15px;
+            border: 3px solid #f1f1f1;
+            z-index: 9;
+            }
+            .login-form-popup-password{
+            display: none;
+            /* position: fixed; */
+            bottom: 0;
+            right: 15px;
+            border: 3px solid #f1f1f1;
+            z-index: 9;
+            }
     </style>
 </head>
 <body>
+    <h1>
+        dfkjdh
+    </h1>
+    <h1>
+        dfkjdhaaaaaaaaaaaaaaaaaaaaaaa
+    </h1>
+    <h1>
+        dfkjdhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+    </h1>
+    <h1>
+        dfkjdhjnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+    </h1>
+    <h1>
+        dfkjdhnbnsbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+    </h1>
         <div class="col-md-12">
             <button class="open-button btn-primary" onclick="openSignUPForm()">Open SignUp Form</button>
-            <button class="open-button btn-primary" onclick="openLoginForm()">Open Login Form</button>
+            <button class="open-button btn-primary" onclick="openEmailLoginForm()">Open Login Form</button>
         </div>
-        <div class="login-form-popup" id="login">
+        <div class="login-form-popup-email" id="login_email">
             <div class="container mt-4">
                 <div class="heading">
                     <h3 style="text-align: center; color: rgb(27, 17, 168);">Login</h3>
@@ -64,31 +95,56 @@
         
                 <div class="form">
                 <!-- ADD NEW USER  -->
-                <form method="" id="login_user_form">
+                <form method="" id="login_user_form_email">
                     {% csrf_token %}
 
                             <div class="form-group">
                             <input type="email" id="user_emailid" required name="email" placeholder="User Email"><br>
                             </div>
 
-                            <div class="form-group">
-                            <input type="password" id="user_pass" required name="password" placeholder="User Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Enter a combination of [a-z][A-Z][0-9] and must be 8 char long"><br>
-                            </div>
-
                             <p>Don't have an account yet?<a id="signup-link" href="#" onclick="openSignUPForm()">Sign Up</a></p>
 
                     <div class="row">
                         <div class="col-md-6">
-                        <button type="submit" value="submit" class="btn btn-primary" onclick="OpenCategoryForm()" >Create User</button>
+                        <button type="submit" value="submit" class="btn btn-primary" onclick="openPasswordLoginForm()" >Next</button>
                         </div>
-                        <div class="COL-MD-6">
-                        <button type="button" class="btn cancel btn-primary" onclick="closeLoginForm()">Close</button>
+                        <div class="col-md-6">
+                        <button type="button" class="btn cancel btn-primary" onclick="closeEmailLoginForm()">Close</button>
                         </div>
                     </div>
                 </form>
                 </div>
             </div>
             </div>
+            <div class="login-form-popup-password" id="login_password">
+                <div class="container mt-4">
+                    <div class="heading">
+                        <h3 style="text-align: center; color: rgb(27, 17, 168);">Login</h3>
+                    </div>
+            
+                    <div class="form">
+                    <!-- ADD NEW USER  -->
+                    <form method="" id="login_user_form_password">
+                        {% csrf_token %}
+
+                                <div class="form-group">
+                                <input type="password" id="user_pass" required name="password" placeholder="User Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Enter a combination of [a-z][A-Z][0-9] and must be 8 char long"><br>
+                                </div>
+    
+                                <p>Don't have an account yet?<a id="signup-link" href="#" onclick="openSignUPForm()">Sign Up</a></p>
+    
+                        <div class="row">
+                            <div class="col-md-6">
+                            <button type="submit" value="submit" class="btn btn-primary" onclick="OpenCategoryFormLogin()" >Login</button>
+                            </div>
+                            <div class="COL-MD-6">
+                            <button type="button" class="btn cancel btn-primary" onclick="closePasswordLoginForm()">Close</button>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+                </div>
     <div class="signup-form-popup" id="signUp">
     <div class="container mt-4">
         <div class="heading">
@@ -152,7 +208,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                <button type="submit" value="submit" class="btn btn-primary" onclick="OpenCategoryForm()" >Create User</button>
+                <button type="submit" value="submit" class="btn btn-primary" onclick="OpenCategoryFormSignUP()" >Create User</button>
                 </div>
                 <div class="COL-MD-6">
                 <button type="button" class="btn cancel btn-primary" onclick="closeSignUpForm()">Close</button>
@@ -236,52 +292,63 @@
     
     ////Post Data for User
     document.getElementById("user_form").addEventListener("submit", function(event) {
-    event.preventDefault();
-    var emailInput = document.getElementById("user_email");
-    var emailValue = emailInput.value;
-    var url = `http://127.0.0.1:8000/Customer/?email=${emailValue}`;
-    console.log(url);
-    fetch(url)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log(data);
-        console.log(data[0].email);
+    event.preventDefault(); // Prevent the default form submission
 
-        if (data[0].email) {
-            
-            alert("Email is already registered!");
-        } else {
-            var formElement = event.target;
-            var formData = new FormData(formElement);
-            fetch('http://127.0.0.1:8000/Customer/', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-            })
-            .catch(error => {
-                console.error("Error occurred while submitting data:", error);
-                alert("Error occurred while submitting data.");
-            });
-        }
+    var formElement = event.target;
+    var formData = new FormData(formElement);
+
+    console.log(formData,'--data')
+
+    fetch("http://127.0.0.1:8000/Customer/", {
+        method: "POST",
+        body: formData
     })
-    .catch(error => {
-        console.error("Error occurred while checking email:", error);
-        alert("Error occurred while checking email.");
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(err => console.error(err));
     });
-});
+//     document.getElementById("user_form").addEventListener("submit", function(event) {
+//     event.preventDefault();
+//     var emailInput = document.getElementById("user_email");
+//     var emailValue = emailInput.value;
+//     var url = `http://127.0.0.1:8000/Customer/?email=${emailValue}`;
+//     console.log(url);
+//     fetch(url)
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//         }
+//         return response.json();
+//     })
+//     .then(data => {
+//         console.log(data);
+//         console.log(data[0].email);
 
-
-
-
-
+//         if (data[0].email) {
+            
+//             alert("Email is already registered!");
+//         } else {
+//             var formElement = event.target;
+//             var formData = new FormData(formElement);
+//             fetch('http://127.0.0.1:8000/Customer/', {
+//                 method: 'POST',
+//                 body: formData
+//             })
+//             .then(response => response.json())
+//             .then(data => {
+//                 console.log(data);
+//             })
+//             .catch(error => {
+//                 console.error("Error occurred while submitting data:", error);
+//                 alert("Error occurred while submitting data.");
+//             });
+//         }
+//     })
+//     .catch(error => {
+//         console.error("Error occurred while checking email:", error);
+//         alert("Error occurred while checking email.");
+//     });
+// });
 
     ////ADD new product with POST //////////////////////
     document.getElementById("product_form").addEventListener("submit",
@@ -327,12 +394,20 @@
 });
 
 
-    function openLoginForm() {
-    document.getElementById("login").style.display = "block";
+    function openEmailLoginForm() {
+    document.getElementById("login_email").style.display = "block";
     }
 
-    function closeLoginForm() {
-    document.getElementById("login").style.display = "none";
+    function closeEmailLoginForm() {
+    document.getElementById("login_email").style.display = "none";
+    }
+    function openPasswordLoginForm() {
+    document.getElementById("login_password").style.display = "block";
+    document.getElementById("login_email").style.display = "none";
+    }
+
+    function closePasswordLoginForm() {
+    document.getElementById("login_password").style.display = "none";
     }
 
     function openSignUPForm() {
@@ -343,7 +418,12 @@
     document.getElementById("signUp").style.display = "none";
     }
 
-    function OpenCategoryForm(){
+    function OpenCategoryFormLogin(){
+        document.getElementById("category-form").style.display="block";
+        document.getElementById("login_password").style.display = "none";
+    }
+
+    function OpenCategoryFormSignUP(){
         if(document.getElementById("user_form").validity.valueMissing){
         alert('All Fields  required');}
         document.getElementById("category-form").style.display="block";
@@ -372,34 +452,52 @@ document.getElementById("signup-link").addEventListener("click",function(event){
     closeLoginForm()
 })
 // // login validation
-document.getElementById("login_user_form").addEventListener("submit", function(event) {
+document.getElementById("login_user_form_email").addEventListener("submit", function(event) {
     event.preventDefault();
-
 
     var emailInput = document.getElementById("user_emailid");
     var emailValue = emailInput.value;
-    var url = `http://127.0.0.1:8000/Customer/?email=${emailValue}`;
-    console.log(url);
-    fetch(url)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log(data);
-        console.log(data[0].email);
+    // var passwordInput = document.getElementById("passwordInput");
+    // var passwordValue = passwordInput.value;
 
-        if (data[0].email) {
-            
-            alert("Email is already registered!");
-        } 
-    })
+    fetch(`http://127.0.0.1:8000/Customer/?email=${emailValue}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            console.log(data[0].email);
+            if (data[0].email) {
+
+            } else {
+                alert("Email is not registered.");
+            }
+        })
+        .catch(error => {
+            console.error("Error occurred while checking email:", error);
+            alert("Error occurred while checking email.");
+        });
 });
+
+
 
 
 
 
 </script>
 </html>
+
+fetch(`http://127.0.0.1:8000/Customer/?email=${emailValue}`)
+.then(response => response.json())
+.then(data => {
+    console.log(data);
+    console.log(data[0].email);
+    if (data[0].email) {
+        alert("Email is registered.");
+        document.getElementById("user_password").style.display = "block";
+    } else if(length(data)==0) {
+        alert("Email is not registered.");
+    }
+})
+.catch(error => {
+    console.error("Error occurred while checking email:", error);
+    alert("Error occurred while checking email.");
+});

@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <div class="container mt-5" id="login_container"  >
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal" >Login</button>
+        <div class="modal" id="loginModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title " style="text-align:center;">Login</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-floating mb-3 " id="signUpAlert" style="display: none;">
+                            <p class="h5">We couldn't find this email. Would you like to</p>
+                            <button type="button" onclick="ShowSignUpForm()">sign up with this address?</button>
+                        </div>
+                        <form id="login_form" style="display: block;">
+                            {% csrf_token %}
+                            <div class="form-floating mb-3 ">
+                                <input type="email" class="form-control" id="user_emailid" required />
+                                <label for="floatingInput">Email address</label>
+                            </div>
+                            <div class="form-floating"  id="passwordField" style="display: none;">
+                                <input type="password" class="form-control" required id="user_password" placeholder="Password">
+                                <label for="floatingPassword">Password</label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="NextBtn" onclick="togglePasswordField()">Next</button>
+                        <button type="submit" class="btn btn-primary" style="display: none;" id="LoginBtn" onclick="userValidation()" >Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="signModal" >
+            <div class="modal-dialog">
+                <div class="modal-content"> 
+                    <div class="modal-header">
+                        <h5 class="modal-title"> SignUp </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="signup_user_form" style="display: block;" >
+                            {% csrf_token %}
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="user_email" required="required"  placeholder="name@example.com"/>
+                                <label for="floatingInput">Email address<span class="required-marker">*</span></label>
+                            </div>
+                            <div class="form-floating mb-3"  id="passwordField" >
+                                <input type="password" class="form-control" id="user_password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Enter a combination of [a-z][A-Z][0-9] and must be 8 char long" placeholder="Password"/>
+                                <label for="floatingPassword">Password<span class="required-marker">*</span></label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="user_fname" required name="first_name" placeholder="First Name" />
+                                <label for="floatingInput">First Name<span class="required-marker">*</span></label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="user_lname" name="last_name" required placeholder="Last Name" />
+                                <label for="floatingInput">Last Name<span class="required-marker">*</span></label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="user_age" name="age" required placeholder="Age" />
+                                <label for="floatingInput">Age<span class="required-marker">*</span></label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input class="form-control" type="tel" id="user_phn" required name="phone_no"  minlength="10" maxlength="10" pattern="[6-9]{1}[0-9]{9}" title="number must start from 6,7,8,9, and must have 10 digits" placeholder="Phone Number"/>
+                                <label for="floatingInput">Phone Number<span class="required-marker">*</span></label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="user_address" required name="address" placeholder="Address"></textarea>
+                                <label for="floatingTextarea">Address<span class="required-marker">*</span></label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <div class="row">
+                                    <div class="form-check ms-4">
+                                        <input class="form-check-input" type="radio" id="male_gen" required name="gender" value="option1" checked>
+                                        <label class="form-check-label" for="exampleRadios1">
+                                        Male
+                                        <span class="required-marker">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="form-check ms-4">
+                                        <input class="form-check-input" type="radio" id="female_gen" required name="gender" value="option2">
+                                        <label class="form-check-label" for="exampleRadios2">
+                                        Female
+                                        <span class="required-marker">*</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="apiCallBtn" >Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="categoryModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title " style="text-align:center;">Login</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="login_form" style="display: block;">
+                            {% csrf_token %}
+                            <div class="form-floating mb-3 ">
+                                <input type="text" class="form-control" id="category" required />
+                                <label for="floatingInput">Category Name</label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="AddCategoryBtn">Add Category</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        
+        <div class="modal" id="productModal" >
+            <div class="modal-dialog">
+                <div class="modal-content"> 
+                    <div class="modal-header">
+                        <h5 class="modal-title"> Add Product </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="signup_user_form" style="display: block;" >
+                            {% csrf_token %}
+            
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="product_name" required name="prod_name" placeholder="Product Name" />
+                                <label for="floatingInput">Product Name<span class="required-marker">*</span></label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="brand_name" name="brand" required placeholder="Brand Name" />
+                                <label for="floatingInput">Brand Name<span class="required-marker">*</span></label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="price" name="price" required placeholder="Price" />
+                                <label for="floatingInput">Price<span class="required-marker">*</span></label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="description" required name="desc" placeholder="Address"></textarea>
+                                <label for="floatingTextarea">Product Description<span class="required-marker">*</span></label>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="addProductBtn" >Add Product </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+  </body>
+  <script>
+
+function togglePasswordField() {
+    const emailInput = document.getElementById("user_emailid").value;
+    const passwordField = document.getElementById("passwordField");
+    const passwordInput = document.getElementById("user_password");
+    const LoginButton=document.getElementById("LoginBtn");
+    const NextBtn=document.getElementById("NextBtn");
+    const SignUpAlert=document.getElementById("signUpAlert")
+
+    console.log("function called")
+    if(emailInput!=""){
+    fetch(`http://127.0.0.1:8000/user/?email=${emailInput}`)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        console.log(data.length)
+        if (data.length!=0  ) {
+            if( data[0].email==emailInput){
+            NextBtn.style.display="none";
+            LoginButton.style.display="block"
+            passwordField.style.display = "block"; // Show the password field
+            SignUpAlert.style.display="none";
+            }
+        } else {
+            alert("email does not registered")
+            SignUpAlert.style.display="block";
+            passwordField.style.display = "none"; // Hide the password field
+            passwordField.style.display = "none"; // 
+        }
+    })
+    }
+else{
+    alert("enter Email to proceed")
+}
+}
+
+
+function ShowSignUpForm(){
+    document.getElementById("loginModal").style.display="none";
+    document.getElementById("signModal").style.display="block";
+}
+  
+
+apiCallBtn.addEventListener("click", (event) => {
+    event.preventDefault(); // Prevent the form from submitting normally
+    var formElement = event.target;
+    var formData = new FormData(formElement);
+    const apiUrl = "http://127.0.0.1:8000/Customer/";
+    const requestData = {
+        method: "POST", // Use GET, POST, PUT, etc., based on your API
+        headers: {
+            "Content-Type": "application/json", // Adjust content type as needed
+        },
+        body: formData // Send form data as JSON
+    };
+    fetch(apiUrl, requestData)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            // Close the modal after API call
+            // modal.style.display = "none";
+        })
+        .catch((error) => {
+            console.error("API Error:", error);
+        });
+});
+
+
+async function userValidation(){
+    var email=document.getElementById("user_emailid").value;
+    var password=document.getElementById("user_password").value;
+    console.log(email ,password )
+    let url = `http://127.0.0.1:8000/user/?email=${email}&password=${password}`;
+    console.log(url,'-------------')
+    
+    if( password===""){
+        alert("please Enter password")
+        document.getElementById("categoryModal").style.display="none";
+    }
+    else{
+    try {
+        const response = await fetch(url);
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            if(data.length!=0){
+            alert("login successful")
+            document.getElementById("categoryModal").style.display="block";
+            document.getElementById("loginModal").style.display="none";
+            }
+            else{
+                alert("incorrect password")
+                document.getElementById("categoryModal").style.display="none";
+            }
+        } else {
+            console.log("Error:", response.statusText);
+
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+    }
+}
+
+
+
+document.getElementById("AddCategoryBtn").addEventListener("click",
+    function(){
+        var category_name=document.getElementById("category").value;
+        console.log(category_name)
+        const formData=new FormData()
+        formData.append("cat_name",category_name)
+        console.log(formData)
+        const url="http://127.0.0.1:8000/category/";
+        fetch(url,{
+            method:"POST",
+            body: formData
+        })
+        .then(res=>res.json)
+        .then(data=>{
+            console.log(data)
+            alert("Category Added")})
+        .catch(err=>console.error(err));
+        document.getElementById("productModal").style.display="block";
+        document.getElementById("categoryModal").style.display="none";
+
+    })
+
+
+document.getElementById("addProductBtn").addEventListener("click",
+    function(event){
+        var product_name=document.getElementById("product_name").value;
+        var brand_name=document.getElementById("brand_name").value;
+        var product_price=document.getElementById("price").value;
+        var product_desc=document.getElementById("description").value;
+        console.log(product_name)
+        const jdata={"prod_name":product_name,"brand":brand_name,"price":product_price,"desc":product_desc,"category":'4'}
+        console.log(jdata)
+        const url="http://127.0.0.1:8000/product/";
+        fetch(url,{
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/json', 
+            },
+            body: JSON.stringify(jdata)
+        })
+        .then(res=>res.json)
+        .then(data=>{
+            console.log(data)
+            alert("Product Added")})
+        .catch(err=>console.error(err));
+        document.getElementById("login_container").style.display="none";
+
+    })
+</script>
+</html>

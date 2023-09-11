@@ -13,7 +13,7 @@ class UModelSerializer(serializers.ModelSerializer):
 class LoginModelSerializer(serializers.ModelSerializer):
     class Meta:
         model=Customer
-        fields=['id','email']
+        fields=['id','email','password']
         
 class CModelSerializer(serializers.ModelSerializer):
     class Meta:
