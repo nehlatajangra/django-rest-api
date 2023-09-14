@@ -2,8 +2,8 @@ from django.http import JsonResponse
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import render,HttpResponse
 from rest_framework import viewsets,filters
-from .models import Customer,Category,Product
-from .serializers import UModelSerializer,CModelSerializer,PModelSerializer,LoginModelSerializer
+from .models import Customer,Category,Product,Location,Apartment
+from .serializers import UModelSerializer,CModelSerializer,PModelSerializer,LoginModelSerializer,AppartmentSerializer,LocationSerializer
 from rest_framework.decorators import api_view
 from django.contrib.auth.hashers import make_password
 from rest_framework.response import Response
@@ -38,6 +38,22 @@ class ProductViewset(viewsets.ModelViewSet):
     
     filter_backends = [DjangoFilterBackend,filters.SearchFilter]
     filterset_fields = ['brand',"prod_name",]
+    
+class LocationViewset(viewsets.ModelViewSet):
+    queryset=Location.objects.all()
+    serializer_class=LocationSerializer
+    filter_backends=[DjangoFilterBackend,filters.SearchFilter]
+    filterset_fields=['pincode','city']
+    
+class AppartmentViewset(viewsets.ModelViewSet):
+    queryset=Apartment.objects.all()
+    serializer_class=AppartmentSerializer
+    
+    filter_backends=[DjangoFilterBackend,filters.SearchFilter]
+    filterset_fields=['house_name','location','parking']
+    
+def address(request):
+    return render(request,'address.html')
     
 def home(request):
     return render(request,'search.html')

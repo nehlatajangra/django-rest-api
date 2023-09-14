@@ -17,8 +17,19 @@ class Category(models.Model):
     cat_name=models.CharField(max_length=100,default="")
     
 class Product(models.Model):
-    category=models.ForeignKey(Category,on_delete=models.CASCADE)
+    category=models.ForeignKey(Category,on_delete=models.CASCADE )
     prod_name=models.CharField(max_length=100,default="")
     brand=models.CharField(max_length=50,default="")
     price=models.IntegerField()
     desc=models.CharField(max_length=200,default="")
+    
+class Location(models.Model):
+    pincode=models.IntegerField()
+    city=models.CharField(max_length=50)
+    
+class Apartment(models.Model):
+    house_number=models.IntegerField()
+    house_name=models.CharField(max_length=100)
+    floor=models.IntegerField()
+    parking=models.BooleanField()
+    location=models.ForeignKey(Location,on_delete=models.CASCADE, related_name='apartments_at_location')

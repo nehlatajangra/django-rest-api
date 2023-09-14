@@ -332,3 +332,69 @@ document.getElementById("addProductBtn").addEventListener("click",
     })
 </script>
 </html>
+
+
+
+async function userValidation(){
+    var email=document.getElementById("user_emailid").value;
+    var password=document.getElementById("user_password").value;
+    console.log(email ,password )
+    let url = `http://127.0.0.1:8000/user/?email=${email}&password=${password}`;
+    console.log(url,'-------------')
+    
+    if( password===""){
+        alert("please Enter password")
+        document.getElementById("category_form").style.display="none";
+    }
+    else{
+    try {
+        const response = await fetch(url);
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            if(data.length!=0){
+            alert("login successful")
+            document.getElementById("category_form").style.display="block";
+            document.getElementById("login_form").style.display="none";
+            }
+            else{
+                alert("incorrect password")
+                document.getElementById("category_form").style.display="none";
+            }
+        } else {
+            console.log("Error:", response.statusText);
+
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+    }
+}
+
+function ShowSignUpForm(){
+document.getElementById("login_form").style.display="none";
+document.getElementById("signup_form").style.display="block";
+}
+
+document.getElementById("AddCategoryBtn").addEventListener("click",
+function(){
+var category_name=document.getElementById("category").value;
+console.log(category_name)
+const formData=new FormData()
+formData.append("cat_name",category_name)
+console.log(formData)
+const url="http://127.0.0.1:8000/category/";
+fetch(url,{
+    method:"POST",
+    body: formData
+})
+.then(res=>res.json)
+.then(data=>{
+    console.log(data)
+    alert("Category Added")})
+.catch(err=>console.error(err));
+document.getElementById("product_form").style.display="block";
+document.getElementById("category_form").style.display="none";
+
+})
+

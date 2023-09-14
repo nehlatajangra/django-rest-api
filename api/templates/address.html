@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <style>
+
+        body {font-family: Arial, Helvetica, sans-serif;}
+        
+        * {box-sizing: border-box;}
+        
+
+        /* Button used to open the contact form - fixed at the bottom of the page */
+        
+        .open-button {
+        
+          background-color: #555;
+        
+          color: white;
+        
+          padding: 16px 20px;
+        
+          border: none;
+        
+          cursor: pointer;
+        
+          opacity: 0.8;
+        
+          position: fixed;
+        
+         
+        
+          width: 280px;
+        
+        }
+        
+         
+        
+        /* The popup form - hidden by default */
+        
+        .form-popup {
+        
+          display: none;
+        
+          position: fixed;
+        
+         
+        
+        right:40%;
+        
+          border: 3px solid #f1f1f1;
+        
+          z-index: 9;
+        
+        }
+        
+         
+        
+        /* Add styles to the form container */
+        
+        .form-container {
+        
+          max-width: 300px;
+        
+          padding: 10px;
+        
+          background-color: white;
+        
+        }
+        
+         
+        
+        /* Full-width input fields */
+        
+        .form-container input[type=text], .form-container input[type=password] {
+        
+          width: 100%;
+        
+          padding: 15px;
+        
+          margin: 5px 0 22px 0;
+        
+          border: none;
+        
+          background: #f1f1f1;
+        
+        }
+        
+         
+        
+        /* When the inputs get focus, do something */
+        
+        .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+        
+          background-color: #ddd;
+        
+          outline: none;
+        
+        }
+        
+         
+        
+        /* Set a style for the submit/login button */
+        
+        .form-container .btn {
+        
+          background-color: #04AA6D;
+        
+          color: white;
+        
+          padding: 16px 20px;
+        
+          border: none;
+        
+          cursor: pointer;
+        
+          width: 100%;
+        
+          margin-bottom:10px;
+        
+          opacity: 0.8;
+        
+        }
+        
+         
+        
+        /* Add a red background color to the cancel button */
+        
+        .form-container .cancel {
+        
+          background-color: red;
+        
+        }
+        
+         
+        
+        /* Add some hover effects to buttons */
+        
+        .form-container .btn:hover, .open-button:hover {
+        
+          opacity: 1;
+        
+        }
+        
+        </style>
+</head>
+<body>
+
+ 
+
+    <h2>Popup Form</h2>
+    
+    <p>Click on the button at the bottom of this page to open the login form.</p>
+    
+    <p>Note that the button and the form is fixed - they will always be positioned to the bottom of the browser window.</p>
+    
+     
+    
+    <button class="open-button" id="main_btn" onclick="openForm()" style="display: block;">Open Form</button>
+    
+     
+    
+    <div class="form-popup" id="login_form" style="display: none;">
+        <form action="" class="form-container">
+            <div class="form-floating mb-3 " id="signUpAlert" style="display: none;">
+                <p class="h5">We couldn't find this email. Would you like to</p>
+                <button type="button" onclick="ShowSignUpForm()">sign up with this address?</button>
+            </div>
+            <h1>Login</h1>
+            <div class="form-floating mb-2">
+                <input type="email" class="form-control" name="email" id="user_emailid" required placeholder="Enter Email"/>
+                <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating"  id="passwordField" style="display: none;">
+                <input type="password" class="form-control" name="password" required id="user_password" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+            </div>
+            <button type="submit" class="btn btn-primary" id="NextBtn" onclick="togglePasswordField()">Next</button>
+            <button type="submit" class="btn btn-primary" style="display: none;" id="LoginBtn" >Login</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
+    
+    </div>
+
+    <div class="form-popup" id="signup_form" style="display: none;">
+        <form action="" class="form-container">
+            
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" name="email" id="user_email" required="required" />
+                <label for="floatingInput">Email address<span class="required-marker">*</span></label>
+            </div>
+            <div class="form-floating mb-3"  id="passwordField" >
+                <input type="password" class="form-control" name="password" id="user_password1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Enter a combination of [a-z][A-Z][0-9] and must be 8 char long" placeholder="Password"/>
+                <label for="floatingPassword">Password<span class="required-marker">*</span></label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="user_fname" required name="first_name" placeholder="First Name" />
+                <label for="floatingInput">First Name<span class="required-marker">*</span></label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="user_lname" name="last_name" required placeholder="Last Name" />
+                <label for="floatingInput">Last Name<span class="required-marker">*</span></label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="user_age" name="age" required placeholder="Age" />
+                <label for="floatingInput">Age<span class="required-marker">*</span></label>
+            </div>
+            <div class="form-floating mb-3">
+                <input class="form-control" type="tel" id="user_phn" required name="phone_no"  minlength="10" maxlength="10" pattern="[6-9]{1}[0-9]{9}" title="number must start from 6,7,8,9, and must have 10 digits" placeholder="Phone Number"/>
+                <label for="floatingInput">Phone Number<span class="required-marker">*</span></label>
+            </div>
+            <div class="form-floating mb-3">
+                <textarea class="form-control" id="user_address" required name="address" placeholder="Address"></textarea>
+                <label for="floatingTextarea">Address<span class="required-marker">*</span></label>
+            </div>
+            <div class="form-floating mb-3">
+                <div class="row">
+                    <div class="form-check ms-4">
+                        <input class="form-check-input" type="radio" id="male_gen" required name="gender" value="option1" checked>
+                        <label class="form-check-label" for="exampleRadios1">
+                        Male
+                        <span class="required-marker">*</span>
+                        </label>
+                    </div>
+                    <div class="form-check ms-4">
+                        <input class="form-check-input" type="radio" id="female_gen" required name="gender" value="option2">
+                        <label class="form-check-label" for="exampleRadios2">
+                        Female
+                        <span class="required-marker">*</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="apiCallBtn" >Sign Up</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
+    
+    </div>
+
+    <div class="form-popup" id="category_form" style="display: none;">
+        <form action="" class="form-container">
+            <div class="form-floating mb-3 ">
+                <input type="text" class="form-control" id="category" required />
+                <label for="floatingInput">Category Name</label>
+            </div>
+            <button type="submit" class="btn btn-primary" id="AddCategoryBtn">Add Category</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
+    </div>
+
+    <script>
+    
+
+    function openForm() {
+
+            document.getElementById("login_form").style.display = "block";
+            document.getElementById("main_btn").style.display="none";
+          
+    }
+    
+    function closeForm() {
+        
+        document.getElementById("login_form").style.display = "none";
+        document.getElementById("main_btn").style.display="block";
+
+    }
+
+    function togglePasswordField() {
+            const emailInput = document.getElementById("user_emailid").value;
+            const passwordField = document.getElementById("passwordField");
+            const passwordInput = document.getElementById("user_password");
+            const LoginButton=document.getElementById("LoginBtn");
+            const NextBtn=document.getElementById("NextBtn");
+            const SignUpAlert=document.getElementById("signUpAlert")
+        
+            console.log("function called")
+            if(emailInput!=""){
+            fetch(`http://127.0.0.1:8000/user/?email=${emailInput}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                console.log(data.length)
+                if (data.length!=0  ) {
+                    if( data[0].email==emailInput){
+                    NextBtn.style.display="none";
+                    LoginButton.style.display="block"
+                    passwordField.style.display = "block"; // Show the password field
+                    SignUpAlert.style.display="none";
+                    }
+                } else {
+                    alert("email does not registered")
+                    SignUpAlert.style.display="block";
+                    passwordField.style.display = "none"; // Hide the password field
+                    passwordField.style.display = "none"; // 
+                }
+            })
+            }
+        else{
+            alert("enter Email to proceed")
+        }
+        }
+
+    </script>
+    </body>
+</html>
