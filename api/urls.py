@@ -19,6 +19,7 @@ urlpatterns = [
     path('addproduct/',views.addProduct,name="addProduct"),
     path('getUser/',views.getUser,name='getUser'),
     path('address/',views.address,name='address'),
-    path('',views.popUp,name="popup")
+    path('',views.popUp,name="popup"),
+    path('counter/',views.wordCounter,name="wordCounter")
 ]
 urlpatterns+=router.urls

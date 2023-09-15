@@ -50,10 +50,11 @@ class AppartmentViewset(viewsets.ModelViewSet):
     serializer_class=AppartmentSerializer
     
     filter_backends=[DjangoFilterBackend,filters.SearchFilter]
-    filterset_fields=['house_name','location','parking']
+    filterset_fields=['house_name','location']
     
 def address(request):
-    return render(request,'address.html')
+    catList=Category.objects.all()
+    return render(request,'address.html',{"category":catList})
     
 def home(request):
     return render(request,'search.html')
@@ -69,7 +70,25 @@ def addProduct(request):
         
     
 def popUp(request):
-    return render(request,'popUpForm.html')    
+    return render(request,'popUpForm.html')  
+
+def wordCounter(request):
+    # if request.method=='POST':
+    #     data=request.POST.get('Textarea1','')
+    #     print(data)
+    #     if data:
+    #         words = data.split(' ')
+    #         length = len(words)
+    #     else:
+    #         words = []
+    #         length = 0
+
+    #     context={
+    #         'Words':words,
+    #         'length':length
+    #     }
+    #     return render(request,"wordCounter.html",context)
+    return render(request,"wordCounter.html")  
         
 # 33333333333333333333333333333333333333333
 @api_view(['GET'])

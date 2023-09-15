@@ -21,6 +21,7 @@ class CModelSerializer(serializers.ModelSerializer):
         fields='__all__'
         
 class PModelSerializer(serializers.ModelSerializer):
+    category=serializers.CharField(source='category.cat_name')
     class Meta:
         model=Product
         fields='__all__'

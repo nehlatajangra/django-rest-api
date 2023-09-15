@@ -7,8 +7,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <style>
-
+        toastr.options  {
+            positionClass: 'toast-top-right'
+          };
         body {font-family: Arial, Helvetica, sans-serif;}
         
         * {box-sizing: border-box;}
@@ -176,11 +180,11 @@
                 <label for="floatingInput">Email address</label>
             </div>
             <div class="form-floating"  id="passwordField" style="display: none;">
-                <input type="password" class="form-control" name="password" required id="user_password" placeholder="Password">
+                <input type="password" class="form-control" name="password" id="user_password" placeholder="Password">
                 <label for="floatingPassword">Password</label>
             </div>
-            <button type="submit" class="btn btn-primary" id="NextBtn" onclick="togglePasswordField()">Next</button>
-            <button type="submit" class="btn btn-primary" style="display: none;" id="LoginBtn" >Login</button>
+            <button type="button" class="btn btn-primary" id="NextBtn" onclick="togglePasswordField()">Next</button>
+            <button type="button" class="btn btn-primary" style="display: none;" id="LoginBtn" onclick="userValidation()">Login</button>
             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
         </form>
     
@@ -247,7 +251,38 @@
                 <input type="text" class="form-control" id="category" required />
                 <label for="floatingInput">Category Name</label>
             </div>
-            <button type="submit" class="btn btn-primary" id="AddCategoryBtn">Add Category</button>
+            <button type="button" class="btn btn-primary" id="AddCategoryBtn">Add Category</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
+    </div>
+
+    <div class="form-popup" id="product_form" style="display: none;">
+        <form action="" class="form-container">
+            <div class="form-floating mb-3 dropdown">
+                <select class="form-select" aria-label="Default select example">
+                    <option selected disabled="true">--Category--</option>
+                    {% for value in category %}
+                    <option >{{value.cat_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="product_name" required name="prod_name" placeholder="Product Name" />
+                <label for="floatingInput">Product Name<span class="required-marker">*</span></label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="brand_name" name="brand" required placeholder="Brand Name" />
+                <label for="floatingInput">Brand Name<span class="required-marker">*</span></label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="price" name="price" required placeholder="Price" />
+                <label for="floatingInput">Price<span class="required-marker">*</span></label>
+            </div>
+            <div class="form-floating mb-3">
+                <textarea class="form-control" id="description" required name="desc" placeholder="Address"></textarea>
+                <label for="floatingTextarea">Product Description<span class="required-marker">*</span></label>
+            </div>
+            <button type="button" class="btn btn-primary" id="addProductBtn" >Add Product </button>
             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
         </form>
     </div>
@@ -303,6 +338,97 @@
             alert("enter Email to proceed")
         }
         }
+      
+    async function userValidation(){
+    var email=document.getElementById("user_emailid").value;
+    var password=document.getElementById("user_password").value;
+    console.log(email ,password )
+    let url = `http://127.0.0.1:8000/user/?email=${email}&password=${password}`;
+    console.log(url,'-------------')
+    
+    if( password===""){
+        alert("please Enter password")
+        document.getElementById("category_form").style.display="none";
+    }
+    else{
+    try {
+        const response = await fetch(url);
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            if(data.length!=0){
+            alert("login successful")
+            document.getElementById("category_form").style.display="block";
+            document.getElementById("login_form").style.display="none";
+            }
+            else{
+                alert("incorrect password")
+                document.getElementById("category_form").style.display="none";
+            }
+        } else {
+            console.log("Error:", response.statusText);
+
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+    }
+}
+
+    function ShowSignUpForm(){
+    document.getElementById("login_form").style.display="none";
+    document.getElementById("signup_form").style.display="block";
+    }
+    
+    document.getElementById("AddCategoryBtn").addEventListener("click",
+    function(){
+    var category_name=document.getElementById("category").value;
+    console.log(category_name)
+    const formData=new FormData()
+    formData.append("cat_name",category_name)
+    console.log(formData)
+    const url="http://127.0.0.1:8000/category/";
+    fetch(url,{
+        method:"POST",
+        body: formData
+    })
+    .then(res=>res.json)
+    .then(data=>{
+        console.log(data)
+        alert("Category Added")})
+    .catch(err=>console.error(err));
+    document.getElementById("product_form").style.display="block";
+    document.getElementById("category_form").style.display="none";
+    
+    })
+    
+    document.getElementById("addProductBtn").addEventListener("click",
+    function(event){
+        var product_name=document.getElementById("product_name").value;
+        var brand_name=document.getElementById("brand_name").value;
+        var product_price=document.getElementById("price").value;
+        var product_desc=document.getElementById("description").value;
+        console.log(product_name)
+        const jdata={"prod_name":product_name,"brand":brand_name,"price":product_price,"desc":product_desc,"category":'4'}
+        console.log(jdata)
+        const url="http://127.0.0.1:8000/product/";
+        fetch(url,{
+            method:"POST",
+            headers: {
+                'Content-Type': 'application/json', 
+            },
+            body: JSON.stringify(jdata)
+        })
+        .then(res=>res.json)
+        .then(data=>{
+            console.log(data)
+            alert("Product Added")
+            alert("all done!!!!!")
+        })
+        .catch(err=>console.error(err));
+        document.getElementById("product_form").style.display="none";
+
+    })
 
     </script>
     </body>
