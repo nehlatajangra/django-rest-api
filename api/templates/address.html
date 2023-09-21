@@ -1,14 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    {% extends 'base.html' %}
+
+    {% block head %}
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    {% block style %}
+
     <style>
         toastr.options  {
             positionClass: 'toast-top-right'
@@ -68,7 +70,7 @@
         
         .form-container {
         
-          max-width: 300px;
+          max-width: 500px;
         
           padding: 10px;
         
@@ -151,10 +153,11 @@
         }
         
         </style>
-</head>
-<body>
+        {% endblock %}
 
- 
+        {% endblock %}
+
+{% block content %}
 
     <h2>Popup Form</h2>
     
@@ -174,7 +177,10 @@
                 <p class="h5">We couldn't find this email. Would you like to</p>
                 <button type="button" onclick="ShowSignUpForm()">sign up with this address?</button>
             </div>
-            <h1>Login</h1>
+            <div class="form-floating mb-2" >
+                <h1 style="display: inline;">Login</h1>
+                <img style=" float:right;" onclick="closeForm()" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nO2USwqAMAxE3yVS9P4n0Y342+jC4yiFCiKiSVvBhbPqIjOvNGng1xdVAwPgDB5fOwKVprgDVmBWQlyo9Z5WAxBgCoYFKA21hQaghUhsuAYiqeF3EMkVftXE+XS2TNqt5HDrbDd/ApS5wt2bTyQXDbX8E3P4rmSIZhQlFmKZc4mB9AnLrtMAmsh1PQTvr49pAzMqUVBCWOAnAAAAAElFTkSuQmCC">            
+            </div>
             <div class="form-floating mb-2">
                 <input type="email" class="form-control" name="email" id="user_emailid" required placeholder="Enter Email"/>
                 <label for="floatingInput">Email address</label>
@@ -185,79 +191,93 @@
             </div>
             <button type="button" class="btn btn-primary" id="NextBtn" onclick="togglePasswordField()">Next</button>
             <button type="button" class="btn btn-primary" style="display: none;" id="LoginBtn" onclick="userValidation()">Login</button>
-            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+
         </form>
     
     </div>
 
     <div class="form-popup" id="signup_form" style="display: none;">
         <form action="" class="form-container">
-            
-            <div class="form-floating mb-3">
-                <input type="email" class="form-control" name="email" id="user_email" required="required" />
-                <label for="floatingInput">Email address<span class="required-marker">*</span></label>
+            <h1 style="display: inline;">Sign Up</h1>
+            <img style=" float:right;" onclick="closeForm()" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nO2USwqAMAxE3yVS9P4n0Y342+jC4yiFCiKiSVvBhbPqIjOvNGng1xdVAwPgDB5fOwKVprgDVmBWQlyo9Z5WAxBgCoYFKA21hQaghUhsuAYiqeF3EMkVftXE+XS2TNqt5HDrbDd/ApS5wt2bTyQXDbX8E3P4rmSIZhQlFmKZc4mB9AnLrtMAmsh1PQTvr49pAzMqUVBCWOAnAAAAAElFTkSuQmCC">            
+            <div class="row">
+                <div class="form-floating mb-1 col-6">
+                    <input type="email" class="form-control" name="email" id="user_email" required="required" />
+                    <label for="floatingInput">Email address<span class="required-marker">*</span></label>
+                </div>
+                <div class="form-floating mb-1 col-6"  id="passwordField" >
+                    <input type="password" class="form-control" name="password" id="user_password1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Enter a combination of [a-z][A-Z][0-9] and must be 8 char long" placeholder="Password"/>
+                    <label for="floatingPassword">Password<span class="required-marker">*</span></label>
+                </div>
             </div>
-            <div class="form-floating mb-3"  id="passwordField" >
-                <input type="password" class="form-control" name="password" id="user_password1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Enter a combination of [a-z][A-Z][0-9] and must be 8 char long" placeholder="Password"/>
-                <label for="floatingPassword">Password<span class="required-marker">*</span></label>
+            <div class="row">
+                <div class="form-floating mb-1 col-6">
+                    <input type="text" class="form-control" id="user_fname" required name="first_name" placeholder="First Name" />
+                    <label for="floatingInput">First Name<span class="required-marker">*</span></label>
+                </div>
+                <div class="form-floating mb-1 col-6">
+                    <input type="text" class="form-control" id="user_lname" name="last_name" required placeholder="Last Name" />
+                    <label for="floatingInput">Last Name<span class="required-marker">*</span></label>
+                </div>
             </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="user_fname" required name="first_name" placeholder="First Name" />
-                <label for="floatingInput">First Name<span class="required-marker">*</span></label>
+            <div class="row">
+                <div class="form-floating mb-1 col-6">
+                    <input type="text" class="form-control" id="user_age" name="age" required placeholder="Age" />
+                    <label for="floatingInput">Age<span class="required-marker">*</span></label>
+                </div>
+                <div class="form-floating mb-1 col-6">
+                    <input class="form-control" type="tel" id="user_phn" required name="phone_no"  minlength="10" maxlength="10" pattern="[6-9]{1}[0-9]{9}" title="number must start from 6,7,8,9, and must have 10 digits" placeholder="Phone Number"/>
+                    <label for="floatingInput">Phone Number<span class="required-marker">*</span></label>
+                </div>
             </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="user_lname" name="last_name" required placeholder="Last Name" />
-                <label for="floatingInput">Last Name<span class="required-marker">*</span></label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="user_age" name="age" required placeholder="Age" />
-                <label for="floatingInput">Age<span class="required-marker">*</span></label>
-            </div>
-            <div class="form-floating mb-3">
-                <input class="form-control" type="tel" id="user_phn" required name="phone_no"  minlength="10" maxlength="10" pattern="[6-9]{1}[0-9]{9}" title="number must start from 6,7,8,9, and must have 10 digits" placeholder="Phone Number"/>
-                <label for="floatingInput">Phone Number<span class="required-marker">*</span></label>
-            </div>
-            <div class="form-floating mb-3">
-                <textarea class="form-control" id="user_address" required name="address" placeholder="Address"></textarea>
-                <label for="floatingTextarea">Address<span class="required-marker">*</span></label>
-            </div>
-            <div class="form-floating mb-3">
-                <div class="row">
-                    <div class="form-check ms-4">
-                        <input class="form-check-input" type="radio" id="male_gen" required name="gender" value="option1" checked>
-                        <label class="form-check-label" for="exampleRadios1">
-                        Male
-                        <span class="required-marker">*</span>
-                        </label>
-                    </div>
-                    <div class="form-check ms-4">
-                        <input class="form-check-input" type="radio" id="female_gen" required name="gender" value="option2">
-                        <label class="form-check-label" for="exampleRadios2">
-                        Female
-                        <span class="required-marker">*</span>
-                        </label>
+            <div class="row">
+                <div class="form-floating mb-1 col-6">
+                    <textarea class="form-control" id="user_address" required name="address" placeholder="Address"></textarea>
+                    <label for="floatingTextarea">Address<span class="required-marker">*</span></label>
+                </div>
+                <div class="form-floating mb-1 col-6">
+                    <div class="row">
+                        <div class="form-check ms-4">
+                            <input class="form-check-input" type="radio" id="male_gen" required name="gender" value="Male" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                            Male
+                            <span class="required-marker">*</span>
+                            </label>
+                        </div>
+                        <div class="form-check ms-4">
+                            <input class="form-check-input" type="radio" id="female_gen" required name="gender" value="Female">
+                            <label class="form-check-label" for="exampleRadios2">
+                            Female
+                            <span class="required-marker">*</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" id="apiCallBtn" >Sign Up</button>
-            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+            <button type="submit" class="btn btn-primary" id="signUpBtn" >Sign Up</button>
+
         </form>
     
     </div>
 
     <div class="form-popup" id="category_form" style="display: none;">
         <form action="" class="form-container">
+            <h1 style="display: inline;">Add Category</h1>
+            <img style=" float:right;" onclick="closeForm()" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nO2USwqAMAxE3yVS9P4n0Y342+jC4yiFCiKiSVvBhbPqIjOvNGng1xdVAwPgDB5fOwKVprgDVmBWQlyo9Z5WAxBgCoYFKA21hQaghUhsuAYiqeF3EMkVftXE+XS2TNqt5HDrbDd/ApS5wt2bTyQXDbX8E3P4rmSIZhQlFmKZc4mB9AnLrtMAmsh1PQTvr49pAzMqUVBCWOAnAAAAAElFTkSuQmCC">            
             <div class="form-floating mb-3 ">
                 <input type="text" class="form-control" id="category" required />
                 <label for="floatingInput">Category Name</label>
             </div>
             <button type="button" class="btn btn-primary" id="AddCategoryBtn">Add Category</button>
-            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+
         </form>
     </div>
 
     <div class="form-popup" id="product_form" style="display: none;">
         <form action="" class="form-container">
+            <h1 style="display: inline;">Add Product </h1>
+            <img style=" float:right;" onclick="closeForm()" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nO2USwqAMAxE3yVS9P4n0Y342+jC4yiFCiKiSVvBhbPqIjOvNGng1xdVAwPgDB5fOwKVprgDVmBWQlyo9Z5WAxBgCoYFKA21hQaghUhsuAYiqeF3EMkVftXE+XS2TNqt5HDrbDd/ApS5wt2bTyQXDbX8E3P4rmSIZhQlFmKZc4mB9AnLrtMAmsh1PQTvr49pAzMqUVBCWOAnAAAAAElFTkSuQmCC">            
+
             <div class="form-floating mb-3 dropdown">
                 <select class="form-select" aria-label="Default select example">
                     <option selected disabled="true">--Category--</option>
@@ -283,13 +303,23 @@
                 <label for="floatingTextarea">Product Description<span class="required-marker">*</span></label>
             </div>
             <button type="button" class="btn btn-primary" id="addProductBtn" >Add Product </button>
-            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+
         </form>
     </div>
 
     <script>
-    
 
+//get value from cookie
+        var cookieName="url=";
+        const decodedCookie = decodeURIComponent(document.cookie);
+        const cookieArray = decodedCookie.split(';');
+        for (let i = 0; i < cookieArray.length; i++) {
+            let cookie = cookieArray[i].trim();
+            if (cookie.indexOf(cookieName) === 0) {
+             base_url=cookie.substring(cookieName.length, cookie.length)
+               console.log(base_url,"-------------------");
+            }
+        }
     function openForm() {
 
             document.getElementById("login_form").style.display = "block";
@@ -314,7 +344,7 @@
         
             console.log("function called")
             if(emailInput!=""){
-            fetch(`http://127.0.0.1:8000/user/?email=${emailInput}`)
+            fetch(`${base_url}user/?email=${emailInput}`)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
@@ -427,9 +457,26 @@
         })
         .catch(err=>console.error(err));
         document.getElementById("product_form").style.display="none";
-
     })
 
+    document.getElementById("signup_form").addEventListener("submit",
+    function(event){
+        event.preventDefault();
+        formElement=event.target;
+        formData=new 
+        FormData(formElement);
+        console.log(formData);
+        fetch("http://127.0.0.1:8000/Customer/",{
+            method: "POST",
+            body: formData
+        })
+        .then(res=>res.json())
+        .then(data=>console.log(data))
+        .catch(err=>console.error(err))
+        
+
+    })
     </script>
+    {% endblock %}
     </body>
 </html>

@@ -20,6 +20,7 @@ urlpatterns = [
     path('getUser/',views.getUser,name='getUser'),
     path('address/',views.address,name='address'),
     path('',views.popUp,name="popup"),
-    path('counter/',views.wordCounter,name="wordCounter")
+    path('counter/',views.wordCounter,name="wordCounter"),
+    path('spinner/',views.spinner,name='spinner')
 ]
 urlpatterns+=router.urls

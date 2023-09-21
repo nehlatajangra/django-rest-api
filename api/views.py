@@ -73,22 +73,37 @@ def popUp(request):
     return render(request,'popUpForm.html')  
 
 def wordCounter(request):
-    # if request.method=='POST':
-    #     data=request.POST.get('Textarea1','')
-    #     print(data)
-    #     if data:
-    #         words = data.split(' ')
-    #         length = len(words)
-    #     else:
-    #         words = []
-    #         length = 0
-
-    #     context={
-    #         'Words':words,
-    #         'length':length
-    #     }
-    #     return render(request,"wordCounter.html",context)
-    return render(request,"wordCounter.html")  
+    if request.method=='POST':
+        print(request.method=='POST')
+        data=request.POST.get('area1')
+        space=0
+        print(len(data))
+        if data:
+            words = data.split(' ')
+            length = len(words)
+            withSpace=len(data)
+            for i in data:
+                if i==' ':
+                    space=length-1
+            print(space)
+            withoutSpace=withSpace-space
+            print(withoutSpace)
+        else:
+            words = []
+            length = 0
+            withSpace=0
+        context={
+            'Words':words,
+            'length':length,
+            'withSpace':withSpace,
+            'withoutSpace':withoutSpace
+        }
+        return render(request,"wordCounter.html",context)
+    else:
+        return render(request,"wordCounter.html")
+    
+def spinner(request):
+    return render(request,'spinner.html')
         
 # 33333333333333333333333333333333333333333
 @api_view(['GET'])

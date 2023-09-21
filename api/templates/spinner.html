@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{%  block head %}
+<head>
+
+</head>
+{% endblock %}
+<body>
+    {% block content %}
+    <h1>spinner demo</h1>
+    <button type="button" class="btn btn-primary " id="spinnerBtn" style="position: relative;">Check Spinner  <div class="spinner-border"  id="loadingSpinner" style="display: none; position: absolute; left:40px; bottom:2px;"></div>
+    </button>
+
+    <div >
+        <img src="">
+    </div>
+
+
+</body>
+<script>
+    var btnContent = document.getElementById("spinnerBtn");
+    document.getElementById("spinnerBtn").addEventListener("click", () => {
+        btnContent.style.opacity=0.8;
+        document.getElementById("loadingSpinner").style.display="block";
+        setTimeout(() => {
+            btnContent.style.opacity=1;
+            document.getElementById("loadingSpinner").style.display="none";
+        }, 3000);
+    });
+    
+</script>
+{% endblock %}
