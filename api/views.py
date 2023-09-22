@@ -2,8 +2,8 @@ from django.http import JsonResponse
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import render,HttpResponse
 from rest_framework import viewsets,filters
-from .models import Customer,Category,Product,Location,Apartment
-from .serializers import UModelSerializer,CModelSerializer,PModelSerializer,LoginModelSerializer,AppartmentSerializer,LocationSerializer
+from .models import Customer,Category,Product,Location,Apartment,Student,Employee,Interest
+from .serializers import UModelSerializer,CModelSerializer,PModelSerializer,LoginModelSerializer,AppartmentSerializer,LocationSerializer,ApartmentFilter,StudentSerializer,EmployeeFilter,EmployeeSerializer
 from rest_framework.decorators import api_view
 from django.contrib.auth.hashers import make_password
 from rest_framework.response import Response
@@ -48,9 +48,29 @@ class LocationViewset(viewsets.ModelViewSet):
 class AppartmentViewset(viewsets.ModelViewSet):
     queryset=Apartment.objects.all()
     serializer_class=AppartmentSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_class = ApartmentFilter
+    filterset_fields=['house_name']
     
+class StudentViewset(viewsets.ModelViewSet):
+    queryset=Student.objects.all()
+    serializer_class=StudentSerializer
     filter_backends=[DjangoFilterBackend,filters.SearchFilter]
-    filterset_fields=['house_name','location']
+    filterset_fields=['hobbies']
+ 
+class EmployeeViewset(viewsets.ModelViewSet):
+    queryset=Employee.objects.all()
+    serializer_class=EmployeeSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_class=EmployeeFilter
+    
+def password(request):
+    return render(request,'password.html')
+def ghar(request):
+    return render(request, 'location.html')
+
+def toastr(request):
+    return render(request,'result.html')
     
 def address(request):
     catList=Category.objects.all()
@@ -67,10 +87,13 @@ def addUser(request):
 
 def addProduct(request):
     return render(request,"product.html")
-        
-    
+            
 def popUp(request):
     return render(request,'popUpForm.html')  
+
+def pop(request):
+    catList=Category.objects.all()
+    return render(request,"popup.html",{"category":catList})
 
 def wordCounter(request):
     if request.method=='POST':

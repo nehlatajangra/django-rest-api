@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="cityValue" placeholder="Enter City">
+    <input type="number" id="pincodeValue" placeholder="Enter pincode">
+    <button type="submit" onclick="searchHome()">Search</button>
+</body>
+</html>
+<script>
+    function searchHome(){
+        var city=document.getElementById("cityValue").value;
+        var pin=document.getElementById("pincodeValue").value;
+        console.log(pin,city)
+        alert("calling")
+        fetch(`http://127.0.0.1:8000/appartment/?city=${city}&pincode=${pin}`)
+        .then(res=>res.json())
+        .then(data=>console.log(data))
+        .catch(err=>console.error(err))
+        alert("called done")
+
+    }
+</script>

@@ -1,3 +1,4 @@
+
     {% extends 'base.html' %}
 
     {% block head %}
@@ -8,9 +9,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+    {% endblock %}
     {% block style %}
-
     <style>
         toastr.options  {
             positionClass: 'toast-top-right'
@@ -151,11 +151,26 @@
           opacity: 1;
         
         }
-        
+        #snackbar {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #db0d0d;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+          }
+          #snackbar.show {
+            visibility: visible;
+          }
         </style>
-        {% endblock %}
-
-        {% endblock %}
+    {% endblock %}
 
 {% block content %}
 
@@ -170,9 +185,11 @@
     <button class="open-button" id="main_btn" onclick="openForm()" style="display: block;">Open Form</button>
     
      
+  <div id="snackbar">Some text some message..</div>
     
     <div class="form-popup" id="login_form" style="display: none;">
         <form action="" class="form-container">
+            {% csrf_token %}
             <div class="form-floating mb-3 " id="signUpAlert" style="display: none;">
                 <p class="h5">We couldn't find this email. Would you like to</p>
                 <button type="button" onclick="ShowSignUpForm()">sign up with this address?</button>
@@ -198,6 +215,7 @@
 
     <div class="form-popup" id="signup_form" style="display: none;">
         <form action="" class="form-container">
+            {% csrf_token %}
             <h1 style="display: inline;">Sign Up</h1>
             <img style=" float:right;" onclick="closeForm()" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nO2USwqAMAxE3yVS9P4n0Y342+jC4yiFCiKiSVvBhbPqIjOvNGng1xdVAwPgDB5fOwKVprgDVmBWQlyo9Z5WAxBgCoYFKA21hQaghUhsuAYiqeF3EMkVftXE+XS2TNqt5HDrbDd/ApS5wt2bTyQXDbX8E3P4rmSIZhQlFmKZc4mB9AnLrtMAmsh1PQTvr49pAzMqUVBCWOAnAAAAAElFTkSuQmCC">            
             <div class="row">
@@ -262,19 +280,21 @@
 
     <div class="form-popup" id="category_form" style="display: none;">
         <form action="" class="form-container">
+            {% csrf_token %}
             <h1 style="display: inline;">Add Category</h1>
             <img style=" float:right;" onclick="closeForm()" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nO2USwqAMAxE3yVS9P4n0Y342+jC4yiFCiKiSVvBhbPqIjOvNGng1xdVAwPgDB5fOwKVprgDVmBWQlyo9Z5WAxBgCoYFKA21hQaghUhsuAYiqeF3EMkVftXE+XS2TNqt5HDrbDd/ApS5wt2bTyQXDbX8E3P4rmSIZhQlFmKZc4mB9AnLrtMAmsh1PQTvr49pAzMqUVBCWOAnAAAAAElFTkSuQmCC">            
             <div class="form-floating mb-3 ">
                 <input type="text" class="form-control" id="category" required />
                 <label for="floatingInput">Category Name</label>
             </div>
-            <button type="button" class="btn btn-primary" id="AddCategoryBtn">Add Category</button>
+            <button type="submit" class="btn btn-primary" id="AddCategoryBtn">Add Category</button>
 
         </form>
     </div>
 
     <div class="form-popup" id="product_form" style="display: none;">
         <form action="" class="form-container">
+            {% csrf_token %}
             <h1 style="display: inline;">Add Product </h1>
             <img style=" float:right;" onclick="closeForm()" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nO2USwqAMAxE3yVS9P4n0Y342+jC4yiFCiKiSVvBhbPqIjOvNGng1xdVAwPgDB5fOwKVprgDVmBWQlyo9Z5WAxBgCoYFKA21hQaghUhsuAYiqeF3EMkVftXE+XS2TNqt5HDrbDd/ApS5wt2bTyQXDbX8E3P4rmSIZhQlFmKZc4mB9AnLrtMAmsh1PQTvr49pAzMqUVBCWOAnAAAAAElFTkSuQmCC">            
 
@@ -386,10 +406,11 @@
         if (response.ok) {
             const data = await response.json();
             console.log(data);
+            Done_data()
             if(data.length!=0){
-            alert("login successful")
-            document.getElementById("category_form").style.display="block";
-            document.getElementById("login_form").style.display="none";
+                
+                document.getElementById("category_form").style.display="block";
+                document.getElementById("login_form").style.display="none";
             }
             else{
                 alert("incorrect password")
@@ -410,12 +431,11 @@
     document.getElementById("signup_form").style.display="block";
     }
     
-    document.getElementById("AddCategoryBtn").addEventListener("click",
-    function(){
-    var category_name=document.getElementById("category").value;
-    console.log(category_name)
-    const formData=new FormData()
-    formData.append("cat_name",category_name)
+    document.getElementById("category_form").addEventListener("submit",
+    function(event){
+        event.preventDefault();
+        formElement=event.target;
+    const formData=new FormData(formElement);
     console.log(formData)
     const url="http://127.0.0.1:8000/category/";
     fetch(url,{
@@ -477,6 +497,18 @@
 
     })
     </script>
+
+
+
+    
+    <script>     
+        function Done_data() {
+        var x = document.getElementById("snackbar");
+        console.log(x)
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);}
+      </script>
+      
     {% endblock %}
     </body>
 </html>
