@@ -2,14 +2,41 @@ from rest_framework import serializers
 from .models import Category,Product,Customer,Location,Apartment,Student,Employee,Interest
 from rest_framework.validators import UniqueValidator
 import django_filters
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 
 
+class LoginSerializer(serializers.Serializer):
+    email = serializers.CharField(max_length=200)
+    password = serializers.CharField(max_length=200)
+            
+            
+# customer serializer 
 class UModelSerializer(serializers.ModelSerializer):
-
     class Meta:
         model=Customer
-        fields='__all__'        
+        fields=('id','email','password','first_name','last_name','address','age','phone_no','gender')       
+        extra_kargs={
+            "password":{'write_only':True}
+        }  
+        def create(self, validate_data):
+            users=Customer.objects.create_user(validate_data["email"],
+                                               password=validate_data["password"],
+                                               first_name=validate_data["first_name"],
+                                               last_name=validate_data["last_name"],
+                                               address=validate_data["address"],
+                                               age=validate_data["age"],
+                                               phone_no=validate_data["phone_no"],
+                                               gender=validate_data["gender"])
+            return users
         
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+
+class ResetPasswordEmailSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+          
 class LoginModelSerializer(serializers.ModelSerializer):
     class Meta:
         model=Customer
@@ -67,3 +94,8 @@ class EmployeeFilter(django_filters.FilterSet):
     class Meta:
         model = Employee
         fields = []
+        
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        modal=get_user_model()
+        fields=('id','username')

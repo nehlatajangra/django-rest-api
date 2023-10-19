@@ -1,10 +1,26 @@
 from django.db import models
 from django.utils.safestring import mark_safe
+from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.base_user import BaseUserManager,AbstractBaseUser
+from django.contrib.auth.models import AbstractUser
 
+# class UserManager(BaseUserManager):
+#     def create_user( self, email, password=None, is_staff=False, is_active=True, is_superuser=False, **extra_fields ):
+#         """Create a user instance with the given email and password."""
+#         email = UserManager.normalize_email(email)
+#         extra_fields.pop("username", None)
+#         user = self.model(email=email, is_active=is_active, is_staff=is_staff, is_superuser=is_superuser ,**extra_fields)
+#         if password:
+#             user.set_password(password)
+#         user.save()
+#         return user
+                
+#     def create_superuser(self, email, password=None, **extra_fields):
+#         return self.create_user( email, password, is_staff=True, is_superuser=True, **extra_fields )    
 # Create your models here.
-class  Customer(models.Model):
+
+class Customer(models.Model):
     email=models.EmailField()
-    password=models.CharField(max_length=8,blank=False,default="admin123")
     first_name=models.CharField(max_length=50 ,default="")
     last_name=models.CharField(max_length=50,default="")
     address=models.CharField(max_length=100,default="")
@@ -14,6 +30,12 @@ class  Customer(models.Model):
     gender=models.CharField(max_length=10,choices=gender_choice,default="")
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+    
+# class CustomUser(AbstractUser):
+#     email = models.EmailField(unique=True )
+
+#     def __str__(self):
+#         return self.username
     
 class Category(models.Model):
     cat_name=models.CharField(max_length=100,default="")

@@ -2,320 +2,262 @@
 
 {% block head %}
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script src="https://kit.fontawesome.com/948e205264.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 {% block style %}
 
 <style>
-    toastr.options  {
-        positionClass: 'toast-top-right'
-      };
-    body {font-family: Arial, Helvetica, sans-serif;}
-    
-    * {box-sizing: border-box;}
-    
-
-    /* Button used to open the contact form - fixed at the bottom of the page */
-    
-    .open-button {
-    
-      background-color: #555;
-    
-      color: white;
-    
-      padding: 16px 20px;
-    
-      border: none;
-    
-      cursor: pointer;
-    
-      opacity: 0.8;
-    
-      position: fixed;
-    
-     
-    
-      width: 280px;
-    
+    body {
+        font-family: Arial, Helvetica, sans-serif;
     }
-    
-     
-    
+    * {
+        box-sizing: border-box;
+    }
     /* The popup form - hidden by default */
-    
-    .form-popup {
-    
-      display: none;
-    
-      position: fixed;
-    
-     
-    
-    right:40%;
-    
-      border: 3px solid #f1f1f1;
-    
-      z-index: 9;
-    
-    }
-    
-     
-    
-    /* Add styles to the form container */
-    
-    .form-container {
-    
-      max-width: 500px;
-    
-      padding: 10px;
-    
-      background-color: white;
-    
-    }
-    
-     
-    
-    /* Full-width input fields */
-    
-    .form-container input[type=text], .form-container input[type=password] {
-    
-      width: 100%;
-    
-      padding: 15px;
-    
-      margin: 5px 0 22px 0;
-    
-      border: none;
-    
-      background: #f1f1f1;
-    
-    }
-    
-     
-    
-    /* When the inputs get focus, do something */
-    
-    .form-container input[type=text]:focus, .form-container input[type=password]:focus {
-    
-      background-color: #ddd;
-    
-      outline: none;
-    
-    }
-    
-     
-    
-    /* Set a style for the submit/login button */
-    
-    .form-container .btn {
-    
-      background-color: #04AA6D;
-    
-      color: white;
-    
-      padding: 16px 20px;
-    
-      border: none;
-    
-      cursor: pointer;
-    
-      width: 100%;
-    
-      margin-bottom:10px;
-    
-      opacity: 0.8;
-    
-    }
-    
-     
-    
-    /* Add a red background color to the cancel button */
-    
-    .form-container .cancel {
-    
-      background-color: red;
-    
-    }
-    
-     
-    
-    /* Add some hover effects to buttons */
-    
-    .form-container .btn:hover, .open-button:hover {
-    
-      opacity: 1;
-    
-    }
-    
-    </style>
-    {% endblock %}
 
-    {% endblock %}
+    .form-popup {
+        display: none;
+        position: fixed;
+        width: 400px;
+        padding: 10px;
+        background-color: white;
+        right: 40%;
+        border: 3px solid #f1f1f1;
+        z-index: 9;
+    }
+    .scrollDiv{
+        height: 450px;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+.form-floating{
+    margin-left: 20px;
+}
+.form-floating h1{
+    display: inline;
+     color:green ;
+     text-align:center
+}
+    /* Full-width input fields */
+.form-control  {
+    width: 90%;
+}
+.desc{
+    width: 90%;
+}
+.selectCategory{
+    width: 90%;
+}
+
+
+    /* Set a style for the submit/login button */
+    .form-container .btn {
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        width: 90%;
+        margin-bottom: 10px;
+        margin-left: 20px;
+        margin-top: 10px;;
+        opacity: 0.8;
+    }
+
+
+</style>
+{% endblock %}
+
+{% endblock %}
 
 {% block content %}
-
+<div class="container-fluid ">
+<div  id="main-page-div">
 <h2>Popup Form</h2>
 
 <p>Click on the button at the bottom of this page to open the login form.</p>
-<button class="btn btn-primary" id="data_btn" onclick="showFormData()" style="display: block;">Show Form Data</button>
 
 <p>Note that the button and the form is fixed - they will always be positioned to the bottom of the browser window.</p>
-
- 
-
-<button type="submit" class="open-button" id="main_btn" onclick="openForm()" style="display: block;">Open Form</button>
-
-
- 
-<div class="container" id="main_div" style="display: none;">
-<div class="form-popup" id="login_form" style="display: none;">
-    <form action="" class="form-container">
-        {% csrf_token %}
-        <div class="form-floating mb-3 " id="signUpAlert" style="display: none;">
-            <p class="h5">We couldn't find this email. Would you like to</p>
-            <button type="button" onclick="ShowSignUpForm()">sign up with this address?</button>
-        </div>
-        <div class="form-floating mb-2" >
-            <h1 style="display: inline;">Login</h1>
-            <img style=" float:right;" onclick="closeForm()" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nO2USwqAMAxE3yVS9P4n0Y342+jC4yiFCiKiSVvBhbPqIjOvNGng1xdVAwPgDB5fOwKVprgDVmBWQlyo9Z5WAxBgCoYFKA21hQaghUhsuAYiqeF3EMkVftXE+XS2TNqt5HDrbDd/ApS5wt2bTyQXDbX8E3P4rmSIZhQlFmKZc4mB9AnLrtMAmsh1PQTvr49pAzMqUVBCWOAnAAAAAElFTkSuQmCC">            
-        </div>
-        <div class="form-floating mb-2">
-            <input type="email" class="form-control" name="email" id="user_emailid" required placeholder="Enter Email"/>
-            <label for="floatingInput">Email address</label>
-        </div>
-        <div class="form-floating"  id="passwordField" style="display: none;">
-            <input type="password" class="form-control" name="password" id="user_password" placeholder="Password">
-            <label for="floatingPassword">Password</label>
-        </div>
-        <button type="button" class="btn btn-primary" id="NextBtn" onclick="EmailValidation()">Next</button>
-        <button type="button" class="btn btn-primary" style="display: none;" id="LoginBtn" onclick="userValidation()">Login</button>
-
-    </form>
-
 </div>
+<button type="submit" class="open-button btn btn-success" id="main_btn" onclick="openForm()"
+    style="display: block;">Open Form</button>
 
-<div class="form-popup" id="signup_form" style="display: none;">
-    <form action="" class="form-container">
-        {% csrf_token %}
-        <h1 style="display: inline;">Sign Up</h1>
-        <img style=" float:right;" onclick="closeForm()" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nO2USwqAMAxE3yVS9P4n0Y342+jC4yiFCiKiSVvBhbPqIjOvNGng1xdVAwPgDB5fOwKVprgDVmBWQlyo9Z5WAxBgCoYFKA21hQaghUhsuAYiqeF3EMkVftXE+XS2TNqt5HDrbDd/ApS5wt2bTyQXDbX8E3P4rmSIZhQlFmKZc4mB9AnLrtMAmsh1PQTvr49pAzMqUVBCWOAnAAAAAElFTkSuQmCC">            
-        <div class="row">
-            <div class="form-floating mb-1 col-6">
-                <input type="email" class="form-control" name="email" id="user_email" required="required" />
-                <label for="floatingInput">Email address<span class="required-marker">*</span></label>
+
+<div class="container mt-2" id="main_div" style="display: none;">
+    <div class="form-popup" id="login_form" style="display: none;">
+        <form action="" class="form-container">
+            {% csrf_token %}
+            <div class="form-floating mb-3 " id="signUpAlert" style="display: none;">
+                <p>We couldn't find this email. Would you like to</p>
+                <button type="button" class="btn btn-success" onclick="ShowSignUpForm()">sign up with this address?</button>
             </div>
-            <div class="form-floating mb-1 col-6"  id="passwordField" >
-                <input type="password" class="form-control" name="password" id="user_password1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Enter a combination of [a-z][A-Z][0-9] and must be 8 char long" placeholder="Password"/>
-                <label for="floatingPassword">Password<span class="required-marker">*</span></label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-floating mb-1 col-6">
-                <input type="text" class="form-control" id="user_fname" required name="first_name" placeholder="First Name" />
-                <label for="floatingInput">First Name<span class="required-marker">*</span></label>
-            </div>
-            <div class="form-floating mb-1 col-6">
-                <input type="text" class="form-control" id="user_lname" name="last_name" required placeholder="Last Name" />
-                <label for="floatingInput">Last Name<span class="required-marker">*</span></label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-floating mb-1 col-6">
-                <input type="text" class="form-control" id="user_age" name="age" required placeholder="Age" />
-                <label for="floatingInput">Age<span class="required-marker">*</span></label>
-            </div>
-            <div class="form-floating mb-1 col-6">
-                <input class="form-control" type="tel" id="user_phn" required name="phone_no"  minlength="10" maxlength="10" pattern="[6-9]{1}[0-9]{9}" title="number must start from 6,7,8,9, and must have 10 digits" placeholder="Phone Number"/>
-                <label for="floatingInput">Phone Number<span class="required-marker">*</span></label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-floating mb-1 col-6">
-                <textarea class="form-control" id="user_address" required name="address" placeholder="Address"></textarea>
-                <label for="floatingTextarea">Address<span class="required-marker">*</span></label>
-            </div>
-            <div class="form-floating mb-1 col-6">
-                <div class="row">
-                    <div class="form-check ms-4">
-                        <input class="form-check-input" type="radio" id="male_gen" required name="gender" value="Male" checked>
-                        <label class="form-check-label" for="exampleRadios1">
-                        Male
-                        <span class="required-marker">*</span>
-                        </label>
-                    </div>
-                    <div class="form-check ms-4">
-                        <input class="form-check-input" type="radio" id="female_gen" required name="gender" value="Female">
-                        <label class="form-check-label" for="exampleRadios2">
-                        Female
-                        <span class="required-marker">*</span>
-                        </label>
-                    </div>
+            <div class="form-floating mb-2">
+                <div style="text-align: center;">
+                <h1 >Login</h1>
+                <img style=" float:right;" onclick="closeForm()"
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nO2USwqAMAxE3yVS9P4n0Y342+jC4yiFCiKiSVvBhbPqIjOvNGng1xdVAwPgDB5fOwKVprgDVmBWQlyo9Z5WAxBgCoYFKA21hQaghUhsuAYiqeF3EMkVftXE+XS2TNqt5HDrbDd/ApS5wt2bTyQXDbX8E3P4rmSIZhQlFmKZc4mB9AnLrtMAmsh1PQTvr49pAzMqUVBCWOAnAAAAAElFTkSuQmCC">
                 </div>
             </div>
+            <div class="form-floating mb-2 row" style="position: relative;">
+                <i class="fa-solid fa-user fa-xl mt-4"style="position: absolute;color:green"></i>
+                <input type="email" class="form-control" name="email" id="user_emailid" required
+                    placeholder="Enter Email" style="padding-left: 50px;"/>
+                    <label for="floatingEmail" style="padding-left: 50px;">Email Address</label>
+            </div>
+            <div class="form-floating row" id="passwordField" style="display: none;">
+                <i class="fa-solid fa-lock fa-xl mt-4" style="position: absolute;color:green"></i>
+                <input type="password" class="form-control" name="password" id="user_password"  style="padding-left: 50px;"/>
+                <label for="floatingPassword" style="padding-left: 50px;">Password</label>
+            </div>
+            <button type="button" class="btn btn-success mt-3" id="NextBtn" onclick="EmailValidation()">Next</button>
+            <button type="button" class="btn btn-success" style="display: none;" id="LoginBtn"
+                onclick="userValidation()">Login</button>
+
+        </form>
+
+    </div>
+
+    <div class="form-popup scrollDiv" id="signup_form" style="display: none;">
+        <form action="" class="form-container">
+            {% csrf_token %}
+            <div class="form-floating mb-2">
+                <div style="text-align: center;">
+                    <h1>Sign Up</h1>
+                    <img style=" float:right;" onclick="closeForm()"
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nO2USwqAMAxE3yVS9P4n0Y342+jC4yiFCiKiSVvBhbPqIjOvNGng1xdVAwPgDB5fOwKVprgDVmBWQlyo9Z5WAxBgCoYFKA21hQaghUhsuAYiqeF3EMkVftXE+XS2TNqt5HDrbDd/ApS5wt2bTyQXDbX8E3P4rmSIZhQlFmKZc4mB9AnLrtMAmsh1PQTvr49pAzMqUVBCWOAnAAAAAElFTkSuQmCC">
+                </div>
+            </div>
+                <div class="form-floating mt-3  ">
+                    <input type="email" class="form-control" pattern=".+@gmail\.com" name="email" id="user_email"
+                        required="required" />
+                    <label for="floatingInput">Email address<span class="required-marker">*</span></label>
+                </div>
+                <div class="form-floating mt-3 " id="passwordField">
+                    <input type="password" class="form-control" name="password" id="user_password1"
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        title="Enter a combination of [a-z][A-Z][0-9] and must be 8 char long" placeholder="Password" />
+                    <label for="floatingPassword">Password<span class="required-marker">*</span></label>
+                </div>
+                <div class="form-floating mt-3 ">
+                    <input type="text" class="form-control" id="user_fname" required name="first_name"
+                        placeholder="First Name" />
+                    <label for="floatingInput">First Name<span class="required-marker">*</span></label>
+                </div>
+                <div class="form-floating mt-3 ">
+                    <input type="text" class="form-control" id="user_lname" name="last_name" required
+                        placeholder="Last Name" />
+                    <label for="floatingInput">Last Name<span class="required-marker">*</span></label>
+                </div>
+                <div class="form-floating mt-3 ">
+                    <input type="text" class="form-control" id="user_age" name="age" required placeholder="Age" />
+                    <label for="floatingInput">Age<span class="required-marker">*</span></label>
+                </div>
+                <div class="form-floating mt-3 ">
+                    <input class="form-control" type="tel" id="user_phn" required name="phone_no" minlength="10"
+                        maxlength="10" pattern="[6-9]{1}[0-9]{9}"
+                        title="number must start from 6,7,8,9, and must have 10 digits" placeholder="Phone Number" />
+                    <label for="floatingInput">Phone Number<span class="required-marker">*</span></label>
+                </div>
+                <div class="form-floating mt-3 ">
+                    <textarea class="form-control textarea" id="user_address" required name="address"
+                        placeholder="Address"></textarea>
+                    <label for="floatingTextarea">Address<span class="required-marker">*</span></label>
+                </div>
+                <div class="form-floating mt-3 ">
+                        <div class="form-check ms-4">
+                            <input class="form-check-input" type="radio" id="male_gen" required name="gender"
+                                value="Male" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                                Male
+                                <span class="required-marker">*</span>
+                            </label>
+                        </div>
+                        <div class="form-check ms-4">
+                            <input class="form-check-input" type="radio" id="female_gen" required name="gender"
+                                value="Female">
+                            <label class="form-check-label" for="exampleRadios2">
+                                Female
+                                <span class="required-marker">*</span>
+                            </label>
+                        </div>
+                </div>
+            <button type="submit" class="btn btn-success mt-3"  id ="signUpBtn">Sign Up</button>
+
+        </form>
+
+    </div>
+
+    <div class="form-popup" id="category_form" style="display: none;">
+        <form action="" class="form-container">
+            {% csrf_token %}
+            <div class="form-floating mb-2">
+                <div style="text-align: center;">
+            <h1>Add Category</h1>
+            <img style=" float:right;" onclick="closeForm()"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nO2USwqAMAxE3yVS9P4n0Y342+jC4yiFCiKiSVvBhbPqIjOvNGng1xdVAwPgDB5fOwKVprgDVmBWQlyo9Z5WAxBgCoYFKA21hQaghUhsuAYiqeF3EMkVftXE+XS2TNqt5HDrbDd/ApS5wt2bTyQXDbX8E3P4rmSIZhQlFmKZc4mB9AnLrtMAmsh1PQTvr49pAzMqUVBCWOAnAAAAAElFTkSuQmCC">
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary" id="signUpBtn" >Sign Up</button>
+                <div class="form-floating mb-3 row "style="position: relative;">
+                <i class="fa-duotone fa-book-open fa-xl mt-4" style="position: absolute;color:green"></i>
+                <input type="text" class="form-control" id="category" required style="padding-left: 50px;"/>
+                <label for="floatingInput" style="padding-left: 50px;">Category Name</label>
+            </div>
+            <button type="submit" class="btn btn-primary" id="AddCategoryBtn">Add Category</button>
 
-    </form>
+        </form>
+    </div>
 
+    <div class="form-popup" id="product_form" style="display: none;">
+        <form action="" class="form-container">
+            {% csrf_token %}
+            <div class="form-floating mb-2">
+                <div style="text-align: center;">
+                    <h1 style="display: inline;">Add Product </h1>
+                    <img style=" float:right;" onclick="closeForm()"
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nO2USwqAMAxE3yVS9P4n0Y342+jC4yiFCiKiSVvBhbPqIjOvNGng1xdVAwPgDB5fOwKVprgDVmBWQlyo9Z5WAxBgCoYFKA21hQaghUhsuAYiqeF3EMkVftXE+XS2TNqt5HDrbDd/ApS5wt2bTyQXDbX8E3P4rmSIZhQlFmKZc4mB9AnLrtMAmsh1PQTvr49pAzMqUVBCWOAnAAAAAElFTkSuQmCC">
+                </div>
+            </div>
+            <div class="form-floating mb-3 dropdown">
+                <select class="form-select selectCategory" aria-label="Default select example" id="selected_category">
+                    <option selected disabled="true">--Category--</option>
+                    {% for value in category %}
+                    <option data-id="{{ value.id }}">{{value.cat_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="product_name" required name="prod_name"
+                    placeholder="Product Name" />
+                <label for="floatingInput">Product Name<span class="required-marker">*</span></label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="brand_name" name="brand" required
+                    placeholder="Brand Name" />
+                <label for="floatingInput">Brand Name<span class="required-marker">*</span></label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="price" name="price" required placeholder="Price" />
+                <label for="floatingInput">Price<span class="required-marker">*</span></label>
+            </div>
+            <div class="form-floating mb-3">
+                <textarea class="form-control desc" id="description" required name="desc" placeholder="Address"></textarea>
+                <label for="floatingTextarea">Product Description<span class="required-marker">*</span></label>
+            </div>
+            <button type="submit" class="btn btn-primary" id="addProductBtn">Add Product </button>
+
+        </form>
+    </div>
 </div>
-
-<div class="form-popup" id="category_form" style="display: none;">
-    <form action="" class="form-container">
-        {% csrf_token %}
-        <h1 style="display: inline;">Add Category</h1>
-        <img style=" float:right;" onclick="closeForm()" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nO2USwqAMAxE3yVS9P4n0Y342+jC4yiFCiKiSVvBhbPqIjOvNGng1xdVAwPgDB5fOwKVprgDVmBWQlyo9Z5WAxBgCoYFKA21hQaghUhsuAYiqeF3EMkVftXE+XS2TNqt5HDrbDd/ApS5wt2bTyQXDbX8E3P4rmSIZhQlFmKZc4mB9AnLrtMAmsh1PQTvr49pAzMqUVBCWOAnAAAAAElFTkSuQmCC">            
-        <div class="form-floating mb-3 ">
-            <input type="text" class="form-control" id="category" required />
-            <label for="floatingInput">Category Name</label>
-        </div>
-        <button type="submit" class="btn btn-primary" id="AddCategoryBtn">Add Category</button>
-
-    </form>
-</div>
-
-<div class="form-popup" id="product_form" style="display: none;">
-    <form action="" class="form-container">
-        {% csrf_token %}
-        <h1 style="display: inline;">Add Product </h1>
-        <img style=" float:right;" onclick="closeForm()" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAlklEQVR4nO2USwqAMAxE3yVS9P4n0Y342+jC4yiFCiKiSVvBhbPqIjOvNGng1xdVAwPgDB5fOwKVprgDVmBWQlyo9Z5WAxBgCoYFKA21hQaghUhsuAYiqeF3EMkVftXE+XS2TNqt5HDrbDd/ApS5wt2bTyQXDbX8E3P4rmSIZhQlFmKZc4mB9AnLrtMAmsh1PQTvr49pAzMqUVBCWOAnAAAAAElFTkSuQmCC">            
-
-        <div class="form-floating mb-3 dropdown">
-            <select class="form-select" aria-label="Default select example" id="selected_category">
-                <option selected disabled="true">--Category--</option>
-                {% for value in category %}
-                <option data-id="{{ value.id }}">{{value.cat_name}}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="product_name" required name="prod_name" placeholder="Product Name" />
-            <label for="floatingInput">Product Name<span class="required-marker">*</span></label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="brand_name" name="brand" required placeholder="Brand Name" />
-            <label for="floatingInput">Brand Name<span class="required-marker">*</span></label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="number" class="form-control" id="price" name="price" required placeholder="Price" />
-            <label for="floatingInput">Price<span class="required-marker">*</span></label>
-        </div>
-        <div class="form-floating mb-3">
-            <textarea class="form-control" id="description" required name="desc" placeholder="Address"></textarea>
-            <label for="floatingTextarea">Product Description<span class="required-marker">*</span></label>
-        </div>
-        <button type="submit" class="btn btn-primary" id="addProductBtn" >Add Product </button>
-
-    </form>
-</div>
-</div>
-<div class="container">
-    <table class="table" id="formDataTable">
-          <tr>
+<div class="container" >
+    <table class="table" id="formDataTable" style="display: none;">
+        <tr>
             <th scope="col">#</th>
             <th scope="col">Email</th>
             <th scope="col">Category</th>
@@ -326,200 +268,280 @@
         </tr>
     </table>
 </div>
+</div>
 <script>
 
-//get value from cookie
-    var cookieName="url=";
+    //get value from cookie
+    var cookieName = "url=";
     const decodedCookie = decodeURIComponent(document.cookie);
     const cookieArray = decodedCookie.split(';');
     for (let i = 0; i < cookieArray.length; i++) {
         let cookie = cookieArray[i].trim();
         if (cookie.indexOf(cookieName) === 0) {
-         base_url=cookie.substring(cookieName.length, cookie.length)
-           console.log(base_url,"-------------------");
+            base_url = cookie.substring(cookieName.length, cookie.length)
+            console.log(base_url, "-------------------");
         }
     }
-function openForm() {
-        document.getElementById("main_div").style.display="block"
+
+    function Email_Fail() {
+        Login_Email_Fail()
+    }
+    function Password_Fail() {
+        Login_Password_Fail()
+    }
+    function LoginPass() {
+        Login_Pass()
+    }
+    function CategoryAdd() {
+        Category_Add()
+    }
+    function ProductAdd() {
+        Product_Add()
+    }
+    function SignUpPass() {
+        SignUp_Pass()
+    }
+    function PasswordRequired() {
+        Password_Required()
+    }
+    function EmailRequired() {
+        Email_Required()
+    }
+
+    function openForm() {
+        document.getElementById("main_div").style.display = "block"
         document.getElementById("login_form").style.display = "block";
-        document.getElementById("main_btn").style.display="none";
-      
-}
+        document.getElementById("main_btn").style.display = "none";
+        document.getElementById("main-page-div").style.opacity=0.5;
 
-function closeForm() {
-    
-    document.getElementById("login_form").style.display = "none";
-    document.getElementById("main_btn").style.display="block";
+    }
 
-}
+    function closeForm() {
 
-function EmailValidation() {
+        document.getElementById("login_form").style.display = "none";
+        document.getElementById("main-page-div").style.opacity = 1;
+        document.getElementById("main_btn").style.display = "block";
+
+    }
+
+    function EmailValidation() {
         const emailInput = document.getElementById("user_emailid").value;
         const passwordField = document.getElementById("passwordField");
         const passwordInput = document.getElementById("user_password");
-        const LoginButton=document.getElementById("LoginBtn");
-        const NextBtn=document.getElementById("NextBtn");
-        const SignUpAlert=document.getElementById("signUpAlert")
-    
-        console.log("function called")
-        if(emailInput!=""){
-        fetch(`${base_url}user/?email=${emailInput}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            console.log(data.length)
-            if (data.length!=0  ) {
-                if( data[0].email==emailInput){
-                NextBtn.style.display="none";
-                LoginButton.style.display="block"
-                passwordField.style.display = "block"; // Show the password field
-                SignUpAlert.style.display="none";
+        const LoginButton = document.getElementById("LoginBtn");
+        const NextBtn = document.getElementById("NextBtn");
+        const SignUpAlert = document.getElementById("signUpAlert")
+        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if (emailInput != "" && emailInput.match(validRegex)) {
+            fetch(`http://127.0.0.1:8000/user/?email=${emailInput}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    console.log(data.length)
+                    if (data.length != 0) {
+                        if (data[0].email == emailInput) {
+                            NextBtn.style.display = "none";
+                            LoginButton.style.display = "block"
+                            passwordField.style.display = "block"; // Show the password field
+                            SignUpAlert.style.display = "none";
+                        }
+                    } else {
+                        Email_Fail();
+                        SignUpAlert.style.display = "block";
+                        passwordField.style.display = "none"; // Hide the password field
+                        passwordField.style.display = "none"; // 
+                    }
+                })
+        }
+        else {
+            EmailRequired();
+        }
+    }
+
+    async function userValidation() {
+        var email = document.getElementById("user_emailid").value;
+        var password = document.getElementById("user_password").value;
+        console.log(email, password)
+        let url = `${static_url}/user/?email=${email}&password=${password}`;
+        console.log(url, '-------------')
+
+        if (password === "") {
+            PasswordRequired();
+            document.getElementById("category_form").style.display = "none";
+        }
+        else {
+            try {
+                const response = await fetch(url);
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(data);
+                    if (data.length != 0) {
+                        LoginPass()
+                        document.getElementById("category_form").style.display = "block";
+                        document.getElementById("login_form").style.display = "none";
+                    }
+                    else {
+                        alert("incorrect password")
+                        document.getElementById("category_form").style.display = "none";
+                    }
+                } else {
+                    console.log("Error:", response.statusText);
+
                 }
-            } else {
-                alert("email does not registered")
-                SignUpAlert.style.display="block";
-                passwordField.style.display = "none"; // Hide the password field
-                passwordField.style.display = "none"; // 
+            } catch (error) {
+                console.error("Error:", error);
             }
+        }
+    }
+
+    function ShowSignUpForm() {
+        document.getElementById("login_form").style.display = "none";
+        document.getElementById("signup_form").style.display = "block";
+        document.getElementById("user_email").value = document.getElementById("user_emailid").value;
+
+
+    }
+
+    document.getElementById("category_form").addEventListener("submit",
+        function (event) {
+            event.preventDefault();
+            formElement = event.target;
+            const formData = new FormData(formElement);
+            formData.set("cat_name", document.getElementById("category").value);
+            console.log(formData)
+            const url = `${static_url}category/`;
+            fetch(url, {
+                method: "POST",
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    CategoryAdd()
+                })
+                .catch(err => console.error(err));
+            document.getElementById("product_form").style.display = "block";
+            document.getElementById("category_form").style.display = "none";
+
         })
+
+    document.getElementById("product_form").addEventListener("submit",
+        function (event) {
+            event.preventDefault();
+            formElement = event.target;
+            formData = new FormData(formElement);
+            console.log(formData);
+            var cat = document.getElementById("selected_category");
+            const selectedOption = cat.options[cat.selectedIndex];
+            const categoryId = selectedOption.getAttribute("data-id");
+            console.log("Selected Category ID:", categoryId);
+            formData.set("category", categoryId)
+            console.log(formData.get("category"))
+            fetch(`${static_url}product/`, {
+                method: "POST",
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    ProductAdd()
+                    showFormData()
+                })
+                .catch(err => console.error(err));
+            document.getElementById("product_form").style.display = "none";
+            document.getElementById("formDataTable").style.display = "block";
+
+        })
+
+    document.getElementById("signup_form").addEventListener("submit",
+        function (event) {
+            event.preventDefault();
+            formElement = event.target;
+            formData = new FormData(formElement);
+            console.log(formData);
+            fetch(`${static_url}Customer/`, {
+                method: "POST",
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+                    SignUpPass();
+                    document.getElementById("category_form").style.display = "block";
+                    document.getElementById("signup_form").style.display = "none";
+                    localStorage.setItem('user_data_token', data.access);
+                    localStorage.setItem('user_data', JSON.stringify(data)); // Store data as a JSON string
+            
+                    console.log(localStorage.getItem('user_data_token'), "Token");
+                    var userData = JSON.parse(localStorage.getItem('user_data')); // Parse the stored JSON string
+                    console.log(userData, "User Data");
+                    sendDataToBackend(userData)
+
+                })
+                .catch(err => console.error(err))
+                document.getElementById("category_form").style.display = "none";
+        })
+
+{% comment %} alert on token expiration  {% endcomment %}
+{% comment %} const jwtToken=localStorage.getItem('user_data_token');
+const parts=jwtToken.split('.');
+const payload=JSON.parse(atob(parts[1]));
+const expiryTime=payload.exp*1000;
+const currentTime = Date.now();
+if (currentTime>=expiryTime){
+    window.location.reload();
+        alert("token is expiring")
+} {% endcomment %}
+
+function sendDataToBackend(userData){
+    console.log(typeof(userData),"inside function ")
+    console.log(userData.access,"kjhhhhhhhhhhhhhhhhhhhhhfuck you");
+    let userToken=userData.access;
+    let userDataJSON = JSON.stringify(userData);
+    $.ajax({
+        type: "POST",
+        url: `http://127.0.0.1:8000/gatData/`,
+        data: {
+          'userData':userDataJSON,
+          'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+        },
+
+        dataType: "json",
+        cache: false,
+        success: function(response) {
+          // Process the response
+          console.log(response,'----------done')
+        
+        },
+        error: function(xhr, status, error) {
+          console.error(error); // Log any error messages
         }
-    else{
-        alert("enter Email to proceed")
+      });
+}
+
+
+    function showFormData() {
+        var tbl = document.getElementById("formDataTable");
+        var row = tbl.insertRow();
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+        var cell6 = row.insertCell(5);
+        var cell7 = row.insertCell(6);
+
+
+        cell2.innerHTML = document.getElementById("user_emailid").value;
+        cell3.innerHTML = document.getElementById("category").value;
+        cell4.innerHTML = document.getElementById("product_name").value;
+        cell5.innerHTML = document.getElementById("brand_name").value;
+        cell6.innerHTML = document.getElementById("price").value;
+        cell7.innerHTML = document.getElementById("description").value;
     }
-    }
-  
-async function userValidation(){
-var email=document.getElementById("user_emailid").value;
-var password=document.getElementById("user_password").value;
-console.log(email ,password )
-let url = `http://127.0.0.1:8000/user/?email=${email}&password=${password}`;
-console.log(url,'-------------')
-
-if( password===""){
-    alert("please Enter password")
-    document.getElementById("category_form").style.display="none";
-}
-else{
-try {
-    const response = await fetch(url);
-    if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        if(data.length!=0){
-        alert("login successful")
-        document.getElementById("category_form").style.display="block";
-        document.getElementById("login_form").style.display="none";
-        }
-        else{
-            alert("incorrect password")
-            document.getElementById("category_form").style.display="none";
-        }
-    } else {
-        console.log("Error:", response.statusText);
-
-    }
-} catch (error) {
-    console.error("Error:", error);
-}
-}
-}
-
-function ShowSignUpForm(){
-document.getElementById("login_form").style.display="none";
-document.getElementById("signup_form").style.display="block";
-}
-
-document.getElementById("category_form").addEventListener("submit",
-    function(event){
-        event.preventDefault();
-        formElement=event.target;
-    const formData=new FormData(formElement);
-    formData.set("cat_name",document.getElementById("category").value);
-    console.log(formData)
-    const url="http://127.0.0.1:8000/category/";
-fetch(url,{
-    method:"POST",
-    body: formData
-})
-.then(res=>res.json())
-.then(data=>{
-    console.log(data)
-    alert("Category Added")})
-.catch(err=>console.error(err));
-document.getElementById("product_form").style.display="block";
-document.getElementById("category_form").style.display="none";
-
-})
-
-document.getElementById("product_form").addEventListener("submit",
-function(event){
-    event.preventDefault();
-    formElement=event.target;
-    formData=new FormData(formElement);
-    console.log(formData);
-    var cat=document.getElementById("selected_category");
-        const selectedOption = cat.options[cat.selectedIndex];
-        const categoryId = selectedOption.getAttribute("data-id");
-        console.log("Selected Category ID:", categoryId);
-        formData.set("category",categoryId)
-        console.log(formData.get("category"))
-     fetch("http://127.0.0.1:8000/product/",{
-        method:"POST",
-        body: formData
-    })
-    .then(res=>res.json())
-    .then(data=>{
-        console.log(data)
-        alert("Product Added")
-        alert("all done!!!!!")
-    })
-    .catch(err=>console.error(err));
-    document.getElementById("product_form").style.display="none";
-    document.getElementById("data_btn").style.display="block";
-
-})
-
-document.getElementById("signup_form").addEventListener("submit",
-function(event){
-    event.preventDefault();
-    formElement=event.target;
-    formData=new FormData(formElement);
-    console.log(formData);
-    fetch("http://127.0.0.1:8000/Customer/",{
-        method: "POST",
-        body: formData
-    })
-    .then(res=>res.json())
-    .then(data=>console.log(data))
-    .catch(err=>console.error(err))
-    
-
-})
-
-function showFormData() {
-    alert("table");
-    var tbl = document.getElementById("formDataTable");
-    var row = tbl.insertRow();
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var cell3 = row.insertCell(2);
-    var cell4 = row.insertCell(3);
-    var cell5 = row.insertCell(4);
-    var cell6 = row.insertCell(5);
-    var cell7 = row.insertCell(6);
-
-
-    cell2.innerHTML = document.getElementById("user_emailid").value;
-    console.log(cell1.innerHTML)
-    cell3.innerHTML = document.getElementById("category").value;
-    cell4.innerHTML = document.getElementById("product_name").value;
-    cell5.innerHTML = document.getElementById("brand_name").value;
-    cell6.innerHTML = document.getElementById("price").value;
-    cell7.innerHTML = document.getElementById("description").value;
-}
 
 
 </script>
 {% endblock %}
 </body>
+
 </html>
