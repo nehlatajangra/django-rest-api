@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     "corsheaders",
-    'fontawesomefree',
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
     'django_rest_passwordreset',
