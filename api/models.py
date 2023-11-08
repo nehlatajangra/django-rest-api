@@ -20,7 +20,9 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class Customer(models.Model):
+    
     email=models.EmailField()
+    password=models.CharField(max_length=8,blank=False,default="admin123")
     first_name=models.CharField(max_length=50 ,default="")
     last_name=models.CharField(max_length=50,default="")
     address=models.CharField(max_length=100,default="")
